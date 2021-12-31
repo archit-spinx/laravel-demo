@@ -32,6 +32,18 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <!-- Search Widget -->
+
+        <form class="card-body" action="/search" method="GET" role="search">
+            @csrf
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for..." name="q">
+                <span class="input-group-btn">
+            <button class="btn btn-secondary" type="submit">Go!</button>
+          </span>
+            </div>
+        </form>
+
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
 
