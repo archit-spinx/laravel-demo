@@ -10,7 +10,7 @@
 		@endif
     	@if(count($productCollection) > 0)
 	    	@foreach($productCollection as $product)
-	        <div class="col-md-4">
+	        <div class="col-md-4 products" style="margin-bottom: 80px;">
 	            <div class="card">
 	                <div class="card-header">
 	                	<label>{{ __($product->title) }}</label>
@@ -38,9 +38,11 @@
 	                	</div>
 	                </div>
 	            </div>
-	        </div><br>
+	        </div>
 	        @endforeach
-	        <p class="text-center loading">Loading...</p>
+	        <div class="ajax-load text-center" style="display:none">
+				<p>Loading More Products. . .</p>
+			</div>
 	    @else
 	    	<div class="col-md-12">
 	    		<div class="card">
@@ -61,36 +63,38 @@
     </div>
 </div>
 <script type="text/javascript">
-    var paginate = 1;
-    loadMoreData(paginate);
-    $(window).scroll(function() {
-        if($(window).scrollTop() + $(window).height() >= $(document).height()) {
-            paginate++;
-            loadMoreData(paginate);
-          }
-    });
-    // run function when user reaches to end of the page
-    function loadMoreData(paginate) {
-        $.ajax({
-            url: '?page=' + paginate,
-            type: 'get',
-            datatype: 'html',
-            beforeSend: function() {
-                $('.loading').show();
-            }
-        })
-        .done(function(data) {
-            if(data.length == 0) {
-                $('.loading').html('No more posts.');
-                return;
-              } else {
-                $('.loading').hide();
-                $('#post').append(data);
-              }
-        })
-           .fail(function(jqXHR, ajaxOptions, thrownError) {
-              alert('Something went wrong.');
-           });
-    }
+    var page = 1;
+	$(window).scroll(function() {
+	    if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+	        page++;
+	        loadMoreData(page);
+	    }
+	});
+
+
+	function loadMoreData(page){
+	  $.ajax(
+	        {
+	            url: '?page=' + page,
+	            type: "get",
+	            beforeSend: function()
+	            {
+	                $('.ajax-load').show();
+	            }
+	        })
+	        .done(function(data)
+	        {
+	            if(data.html == " "){
+	                $('.ajax-load').html("No more records found");
+	                return;
+	            }
+	            $('.ajax-load').hide();
+	            $(".products").last().after(data.html);
+	        })
+	        .fail(function(jqXHR, ajaxOptions, thrownError)
+	        {
+	              alert('server not responding...');
+	        });
+	}
 </script>
 @endsection

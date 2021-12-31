@@ -24,9 +24,15 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
-    public function getProducts()
+    public function getProducts(Request $request)
     {
         $productCollection =  Product::paginate(6);
+
+        if ($request->ajax()) {
+            $view = view('products-data',compact('productCollection'))->render();
+
+            return response()->json(['html'=>$view]);
+        }
         return view('products')->with("productCollection",$productCollection);
     }
 
@@ -109,52 +115,5 @@ class ProductController extends Controller
             'description'=>'required',
             'image' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
-    }
-
-    public function ajaxProducts(Request $request)
-    {
-        $products = Product::paginate(6);
-
-        if ($request->ajax()) {
-            $html = '';
-
-            foreach ($products as $product) {
-
-
-                $html.= '<div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <label>{{ __($product->title) }}</label>
-
-                        <div style="float: right;">
-                            <a class="btn btn-primary" href="'.route('edit-product',$product->id).'">Edit</a>
-                            <a class="btn btn-danger" href="'.route('products').'/remove/'.$product->id.'">Delete</a>
-                        </div>
-                    </div>
-                    <div class="card-body row">
-                        <div class="col-md-12 text-center">
-                            <img src'. __( URL::asset($product->image) ) .'" width="250" height="250" class="rounded mx-auto d-block"/>
-                        </div>
-                        <div class="col-md-12">
-                            @if($product->special_price)
-                                <del>
-                            @endif
-                            <label><b>Price:</b>  </label><spa'. __($product->price) .'</span>$<br>
-                            @if($product->special_price)
-                                </del>
-                                <label><b>Sale Price:</b> </label><spa'. __($product->special_price) .'</span>$
-                                <br>
-                            @endif
-                            <p><b>Description:</b>'. __($product->description) .'</p>
-                        </div>
-                    </div>
-                </div>
-            </div><br>';
-            }
-
-            return $html;
-        }
-
-        return view('products')->with("productCollection",$products);;
     }
 }
