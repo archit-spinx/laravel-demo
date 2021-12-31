@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Routing\UrlGenerator;
-
+use DB;
 class ProductController extends Controller
 {
     /**
@@ -29,7 +29,12 @@ class ProductController extends Controller
         $productCollection =  Product::paginate(6);
 
         if ($request->ajax()) {
-            $view = view('products-data',compact('productCollection'))->render();
+            if(!!$request->search){
+                $productCollection = DB::table('products')->where('title','LIKE','%'.$request->search."%")->get();
+                $view = view('products-data',compact('productCollection'))->render();
+            } else {
+                $view = view('products-data',compact('productCollection'))->render();
+            }
 
             return response()->json(['html'=>$view]);
         }
