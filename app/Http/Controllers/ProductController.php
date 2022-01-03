@@ -123,7 +123,7 @@ class ProductController extends Controller
     }
     public function search(Request $req){
          $posts = Product::query()
-            ->where('title', 'like', "%{$key}%")
+            ->where('title', 'like', "%{$req->q}%")
             ->orderBy('created_at', 'desc')
             ->get();
 

@@ -34,10 +34,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                      <!-- Search Widget -->
 
-        <form class="card-body" action="/search" method="GET" role="search">
+        <form class="card-body" action="/search" method="GET" role="search" style="margin: 0;">
             @csrf
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for..." name="q">
+                <input type="text" class="form-control" placeholder="Search for..." name="q" 
+                value="<?php if(isset($_GET['q'])){ echo $_GET['q']; } ?>">
                 <span class="input-group-btn">
             <button class="btn btn-secondary" type="submit">Go!</button>
           </span>
