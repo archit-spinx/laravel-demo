@@ -26,3 +26,4 @@ Route::post('/add-product', [App\Http\Controllers\ProductController::class, 'cre
 Route::get('/edit-product/{id}', [App\Http\Controllers\ProductController::class, 'edit'])->name('edit-product');
 Route::post('/edit-product/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('edit-product');
 Route::get('/products/remove/{id}', [App\Http\Controllers\ProductController::class, 'destroy']);
+Route::get('/search', [App\Http\Controllers\ProductController::class, 'search']);

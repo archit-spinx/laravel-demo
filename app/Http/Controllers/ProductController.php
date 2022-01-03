@@ -121,4 +121,15 @@ class ProductController extends Controller
             'image' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
     }
+    public function search(Request $req){
+         $posts = Product::query()
+            ->where('title', 'like', "%{$key}%")
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('search', [
+            'posts' => $posts,
+        ]);
+
+    }
 }
