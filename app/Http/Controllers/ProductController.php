@@ -135,22 +135,18 @@ class ProductController extends Controller
     }
 
     public function singleProduct($id){
-          $product= Product::find($id);
-          $avgStar = Rating::where('product_id',$id)->get();
-          
-
-          $rating = 0;
-          if(!$avgStar->isEmpty()){
-              foreach ($avgStar as $rating) {
-                  $avgStar['ratings'] = $rating->avg('rating');
-              }
-              $rating = $avgStar['ratings'];
-          } 
-          
-            
-
-          //return $avgrate;
-          return view('view-product', compact('product','rating')); 
+      $product= Product::find($id);
+      $current_user_id = auth()->user()->id;
+      $avgStar = Rating::where('product_id',$id)->get();
+      $is_rated = Rating::where('product_id',$id)->where('rating_user', '=', $current_user_id)->get();
+      if(count($is_rated) > 0){
+        $rated = 1;
+      } else {
+        $rated = 0;
+      }
+      $rating = 0;
+      $rating = $avgStar->avg('rating');
+      return view('view-product', compact('product','rating','rated')); 
     }
     
    
