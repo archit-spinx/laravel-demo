@@ -7,18 +7,6 @@
 </div>
 <div class="container">
   <div class="panel panel-primary">
-    <div class="panel-heading">
-      <div class="row">
-      <div class="col-lg-6">
-        <div class="input-group">
-          <input name="es_search" value="{{ old('search') }}" type="text" class="form-control" placeholder="Search for...">
-          <span class="input-group-btn">
-            <button class="btn btn-default es_search" >Go!</button>
-          </span>
-        </div><!-- /input-group -->
-      </div><!-- /.col-lg-6 -->
-    </div><!-- /.row -->
-    </div>
     <div class="panel-body">
         <div class="row">
           <div class="col-lg-12">
