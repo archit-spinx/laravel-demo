@@ -77,7 +77,6 @@
 	    } 
 	});
 
-
 	function loadMoreData(page){
 	  	$.ajax(
         {

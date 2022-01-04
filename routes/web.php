@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::view('/welcome','welcome');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'getProducts'])->name('products');
 Route::view('/add-product', 'add-product');
@@ -27,3 +27,5 @@ Route::get('/edit-product/{id}', [App\Http\Controllers\ProductController::class,
 Route::post('/edit-product/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('edit-product');
 Route::get('/products/remove/{id}', [App\Http\Controllers\ProductController::class, 'destroy']);
 Route::get('/search', [App\Http\Controllers\ProductController::class, 'search']);
+Route::view('/product-search', 'product-search');
+Route::get('/product-search/{title}',[App\Http\Controllers\ProductController::class, 'productElasticSearch']);

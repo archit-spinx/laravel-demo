@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Routing\UrlGenerator;
 use DB;
+use Response;
+use Elasticsearch\ClientBuilder;
 class ProductController extends Controller
 {
     /**
@@ -16,11 +18,15 @@ class ProductController extends Controller
 
     protected $url;
 
+    protected $clientBuilder;
+
     public function __construct(
-        UrlGenerator $url
+        UrlGenerator $url,
+        ClientBuilder $clientBuilder
     )
     {
         $this->url = $url;
+        $this->clientBuilder = $clientBuilder->create()->build();
         $this->middleware('auth');
     }
 
@@ -62,7 +68,7 @@ class ProductController extends Controller
             $product->image = $destinationPath.'/'.$file->getClientOriginalName();
         }
         $product->save();  
-
+        $this->setESIndexing($product->toArray());
         return redirect(route('products'))->with('message', 'New Product Added Successfully');
     }
 
@@ -105,9 +111,12 @@ class ProductController extends Controller
 
             $product->image = $destinationPath.'/'.$file->getClientOriginalName();
         }
-
         $product->save();  
-
+        $del = $this->deleteESIndexing();
+        if ($del == true) {
+            $getAllProducts = Product::all(); 
+            $this->setESIndexing($getAllProducts->toArray());
+        }
         return redirect()->back()->with('message', 'Product Updated Successfully');
     }  
 
@@ -121,8 +130,9 @@ class ProductController extends Controller
             'image' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
     }
+
     public function search(Request $req){
-         $posts = Product::query()
+        $posts = Product::query()
             ->where('title', 'like', "%{$req->q}%")
             ->orderBy('created_at', 'desc')
             ->get();
@@ -130,6 +140,40 @@ class ProductController extends Controller
         return view('search', [
             'posts' => $posts,
         ]);
+    }
 
+    public function productElasticSearch(Request $request)
+    {   
+        $params['index'] = 'products_es_index';               
+        $params['type'] = 'product_es_type';                             
+        $params['body']['query']['match']['title'] = $request->title; 
+        $products = $this->clientBuilder->search($params)['hits']['hits']; 
+        return view('product-search', compact('products'));   
+    }
+
+    public function setESIndexing($products)
+    {
+        $params = array();
+        $params['index'] = 'products_es_index';
+        $params['type']  = 'product_es_type';
+        foreach ($products as $key => $product) {
+            $params['body']  = $product;
+            $result = $this->clientBuilder->index($params);
+        }
+    }
+
+    public function deleteESIndexing()
+    {
+        $curl_handle=curl_init();
+        curl_setopt($curl_handle,CURLOPT_URL,'http://localhost:9200/products_es_index');
+        curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
+        curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, 'DELETE'); 
+        curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
+        $buffer = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        if (empty($buffer)){
+            return false;
+        }
+        return true;
     }
 }
