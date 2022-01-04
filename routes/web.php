@@ -29,3 +29,5 @@ Route::get('/products/remove/{id}', [App\Http\Controllers\ProductController::cla
 Route::get('/search', [App\Http\Controllers\ProductController::class, 'search']);
 Route::view('/product-search', 'product-search');
 Route::get('/product-search/{title}',[App\Http\Controllers\ProductController::class, 'productElasticSearch']);
+Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'singleProduct']);
+Route::post('/review-submit', [App\Http\Controllers\RatingController::class, 'reviewsubmit'])
