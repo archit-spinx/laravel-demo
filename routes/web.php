@@ -27,3 +27,5 @@ Route::get('/edit-product/{id}', [App\Http\Controllers\ProductController::class,
 Route::post('/edit-product/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('edit-product');
 Route::get('/products/remove/{id}', [App\Http\Controllers\ProductController::class, 'destroy']);
 Route::get('/search', [App\Http\Controllers\ProductController::class, 'search']);
+Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'singleProduct']);
+Route::post('/review-submit', [App\Http\Controllers\RatingController::class, 'reviewsubmit']);

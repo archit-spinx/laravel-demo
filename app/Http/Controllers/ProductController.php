@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Rating;
 use Illuminate\Routing\UrlGenerator;
 use DB;
 class ProductController extends Controller
@@ -132,4 +133,25 @@ class ProductController extends Controller
         ]);
 
     }
+
+    public function singleProduct($id){
+          $product= Product::find($id);
+          $avgStar = Rating::where('product_id',$id)->get();
+          
+
+          $rating = 0;
+          if(!$avgStar->isEmpty()){
+              foreach ($avgStar as $rating) {
+                  $avgStar['ratings'] = $rating->avg('rating');
+              }
+              $rating = $avgStar['ratings'];
+          } 
+          
+            
+
+          //return $avgrate;
+          return view('view-product', compact('product','rating')); 
+    }
+    
+   
 }
