@@ -49,15 +49,4 @@
 
     </div>
 </div>
-<script type="text/javascript">
-   $(function() {
-      $('#example').barrating({
-        theme: 'fontawesome-stars',
-        onSelect: function(value, text, event) {
-        	$("#ratingform").submit();
-        }
-      });
-   });
-
-</script>
 @endsection
