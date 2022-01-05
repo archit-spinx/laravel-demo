@@ -18,10 +18,10 @@
             		@if($product->special_price)
             			<del>
             		@endif
-                	<label><b>Price:</b>  </label><span>{{ __($product->price) }}</span>$<br>
+                	<label><b>Price:</b>  </label>$<span>{{ __($product->price) }}</span><br>
                 	@if($product->special_price)
             			</del>
-            			<label><b>Sale Price:</b> </label><span>{{ __($product->special_price) }}</span>$
+            			<label><b>Sale Price:</b> </label>$<span>{{ __($product->special_price) }}</span>
             			<br>
             		@endif
                 	<p><b>Description:</b>  {{ __($product->description) }}</p>
