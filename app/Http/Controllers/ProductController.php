@@ -70,7 +70,7 @@ class ProductController extends Controller
     public function edit($id)  
     {  
         $product= Product::find($id);  
-        return view('edit-product', compact('product'));  
+        return view('add-product', compact('product'));  
     } 
 
     public function destroy($id)  
@@ -148,6 +148,14 @@ class ProductController extends Controller
       $rating = $avgStar->avg('rating');
       return view('view-product', compact('product','rating','rated')); 
     }
-    
-   
+
+    public function findAction(Request $request)
+    {
+        if ($request->has('id')) {
+            return $this->edit($request->get('id'));
+        } else {
+            return $this->create($request);
+        }
+        return 'no action found';
+    }
 }
