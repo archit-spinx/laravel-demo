@@ -69,4 +69,5 @@
 	    @endif
     </div>
 </div>
+<input type="hidden" name="ajaxload" value="0" />
 @endsection

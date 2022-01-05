@@ -2,7 +2,9 @@ var page = 1;
 $(window).scroll(function() {
     if($(window).scrollTop() + $(window).height() >= $(document).height()) {
         page++;
-        loadMoreData(page);
+        if ($("input[name='ajaxload']").val() == 0 ) {
+            loadMoreData(page);
+        }
     } 
 });
 
@@ -18,9 +20,13 @@ function loadMoreData(page){
     })
     .done(function(data)
     {
-        if(data.html == " "){
+        console.log(data.html);
+        if(data.html == ""){
+            $("input[name='ajaxload']").val(1);
             $('.ajax-load').html("No more records found");
             return;
+        } else {
+            $("input[name='ajaxload']").val(0);
         }
         $('.ajax-load').hide();
         $(".products").last().after(data.html);
