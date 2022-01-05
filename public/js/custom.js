@@ -57,12 +57,3 @@ $('#search').on('keyup',function(){
           alert('server not responding...');
     });
 });
-
-$(function() {
-  $('#example').barrating({
-    theme: 'fontawesome-stars',
-    onSelect: function(value, text, event) {
-        $("#ratingform").submit();
-    }
-  });
-});
