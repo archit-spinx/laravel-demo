@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link href="{{ asset('css/fontawesome-stars.css') }}" rel="stylesheet">
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
     <script src="{{ asset('js/jquery.barrating.min.js') }}" defer></script>
 </head>
 <body>
