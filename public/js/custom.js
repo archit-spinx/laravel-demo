@@ -51,8 +51,8 @@ $(document).on('ready',function(){
         })
         .done(function(data)
         {
-            if(data.html == " "){
-                $('.ajax-load').html("No more records found");
+            if(data.html == ""){
+                $('.ajax-load').html("No Products found");
                 return;
             }
             $('.ajax-load').hide();
@@ -83,8 +83,8 @@ $(document).on('ready',function(){
             })
             .done(function(data)
             {
-                if(data.html == " "){
-                    $('.ajax-load').html("No more records found");
+                if(data.html == ""){
+                    $('.ajax-load').html("No Products found");
                     return;
                 }
                 $('.ajax-load').hide();

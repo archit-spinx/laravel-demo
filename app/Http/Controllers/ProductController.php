@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\Rating;
 use Illuminate\Routing\UrlGenerator;
 use DB;
@@ -47,12 +48,22 @@ class ProductController extends Controller
         return view('products')->with("productCollection",$productCollection);
     }
 
+    public function getProductCategories(Request $request)
+    {
+        $categoryCollection =  ProductCategory::all();
+        if ($request->route()->getName() == "add-product") {
+            return view('add-product')->with("categoryCollection",$categoryCollection);
+        }
+        return view('product-categories')->with("categoryCollection",$categoryCollection);
+    }
+
     public function create(Request $request)
     {
-        $this->validateRequest($request);
+        $this->validateProductRequest($request);
   
         $product = new Product;  
         $product->title =  $request->get('title');  
+        $product->category_id = $request->get('category'); 
         $product->price = $request->get('price');  
         $product->description = $request->get('description');  
         $product->special_price = $request->get('special_price');  
@@ -72,11 +83,30 @@ class ProductController extends Controller
         return redirect(route('products'))->with('message', 'New Product Added Successfully');
     }
 
+    public function createCategory(Request $request)
+    {
+        $request->validate([  
+            'category_name'=>'required|unique:product_categories,category_name',
+        ]);
+        $ProductCategory = new ProductCategory;  
+        $ProductCategory->category_name =  $request->get('category_name');  
+        $ProductCategory->category_description = $request->get('category_description');  
+        $ProductCategory->save();
+        return redirect(route('product.categories'))->with('message', 'New Product Category Added Successfully');
+    }
+
     public function edit($id)  
     {  
-        $product= Product::find($id);  
-        return view('add-product', compact('product'));  
+        $product= Product::find($id); 
+        $category =  ProductCategory::all(); 
+        return view('add-product')->with('product',$product)->with('categoryCollection',$category);  
     } 
+
+    public function editCategory($id)  
+    {  
+        $category= ProductCategory::find($id);  
+        return view('add-product-category', compact('category'));  
+    }
 
     public function destroy($id)  
     {  
@@ -85,10 +115,18 @@ class ProductController extends Controller
         return redirect()->back()->with('message', 'Product Deleted Successfully');
     }  
 
+    public function destroyCategory($id)  
+    {  
+        $category = ProductCategory::find($id);  
+        $category->delete();  
+        return redirect()->back()->with('message', 'Product Category Deleted Successfully');
+    }
+
     public function update(Request $request, $id)  
     {  
         $request->validate([  
             'title'=>'required',  
+            'category' => 'required',
             'price'=>'required|gt:0|numeric',  
             'special_price' => 'lt:price|numeric',
             'description'=>'required',
@@ -97,6 +135,7 @@ class ProductController extends Controller
 
         $product = Product::find($id);  
         $product->title =  $request->get('title');  
+        $product->category_id = $request->get('category'); 
         $product->price = $request->get('price');  
         $product->description = $request->get('description');  
         $product->special_price = $request->get('special_price');
@@ -117,16 +156,32 @@ class ProductController extends Controller
         return redirect()->back()->with('message', 'Product Updated Successfully');
     }  
 
-    public function validateRequest($request)
+    public function updateCategory(Request $request, $id)  
+    {  
+        $request->validate([  
+            'category_name'=>'required',
+        ]);
+
+        $category = ProductCategory::find($id);  
+        $category->category_name =  $request->get('category_name');  
+        $category->category_description = $request->get('category_description');  
+        $category->save();  
+
+        return redirect()->back()->with('message', 'Product Category Updated Successfully');
+    }
+
+    public function validateProductRequest($request)
     {
         return $request->validate([  
             'title'=>'required|unique:products,title',  
+            'category' => 'required',
             'price'=>'required|gt:0|numeric',   
             'special_price' => 'lt:price|numeric',
             'description'=>'required',
             'image' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
     }
+
     public function search(Request $req){
          $posts = Product::query()
             ->where('title', 'like', "%{$req->q}%")

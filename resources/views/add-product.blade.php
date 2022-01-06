@@ -34,6 +34,21 @@
 						    <input type="text" class="form-control" id="prod_name" placeholder="" name="title" value="{{ (isset($product)) ? $product->title : old('title') }}" required>
 						</div>
 						<div class="form-group mb-2">
+							<label for="prod_name">Category</label>
+							<select class="form-select" name="category">
+								<option value=""></option>
+								@foreach($categoryCollection as $category)
+									<?php
+										$selected = '';
+										if (isset($product) && $category->id == $product->category_id) {
+											$selected = 'selected';
+										}
+									?>
+									<option value="{{ __($category->id) }}" <?= $selected ?> >{{ __($category->category_name) }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="form-group mb-2">
 						    <label for="prod_price">Price</label>
 						    <input type="text" class="form-control" id="prod_price" placeholder="$" name="price" value="{{ (isset($product)) ? $product->price : old('price') }}" required>
 						</div>
