@@ -37,29 +37,64 @@ function loadMoreData(page){
     });
 }
 
-$('#search').on('keyup',function(){
-	$value = $(this).val();
-	$.ajax(
-    {
-        url: '?search=' + $value,
-        type: "get",
-        beforeSend: function()
+$(document).on('ready',function(){
+    $('#search').on('keyup',function(){
+        $value = $(this).val();
+        $.ajax(
         {
-            $('.ajax-load').show();
+            url: '?search=' + $value,
+            type: "get",
+            beforeSend: function()
+            {
+                $('.ajax-load').show();
+            }
+        })
+        .done(function(data)
+        {
+            if(data.html == " "){
+                $('.ajax-load').html("No more records found");
+                return;
+            }
+            $('.ajax-load').hide();
+            $(".all-products").html(data.html);
+            page = 0;
+        })
+        .fail(function(jqXHR, ajaxOptions, thrownError)
+        {
+              alert('server not responding...');
+        });
+    });
+
+    $("select[name='filter_by_price']").on("change",function(){
+        $val = $(this).find(":selected").val();
+        $dataVal = $(this).attr('data-value');
+        if ($val != '') {
+            $.ajax(
+            {
+                url: '?filter=' + $dataVal,
+                data: {
+                    'price' : $val
+                },
+                type: "get",
+                beforeSend: function()
+                {
+                    $('.ajax-load').show();
+                }
+            })
+            .done(function(data)
+            {
+                if(data.html == " "){
+                    $('.ajax-load').html("No more records found");
+                    return;
+                }
+                $('.ajax-load').hide();
+                $(".all-products").html(data.html);
+                page = 0;
+            })
+            .fail(function(jqXHR, ajaxOptions, thrownError)
+            {
+                  alert('server not responding...');
+            });
         }
-    })
-    .done(function(data)
-    {
-        if(data.html == " "){
-            $('.ajax-load').html("No more records found");
-            return;
-        }
-        $('.ajax-load').hide();
-        $(".all-products").html(data.html);
-        page = 0;
-    })
-    .fail(function(jqXHR, ajaxOptions, thrownError)
-    {
-          alert('server not responding...');
     });
 });

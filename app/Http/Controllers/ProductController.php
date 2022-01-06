@@ -33,6 +33,11 @@ class ProductController extends Controller
             if(!!$request->search){
                 $productCollection = DB::table('products')->where('title','LIKE','%'.$request->search."%")->get();
                 $view = view('products-data',compact('productCollection'))->render();
+            } elseif (!!$request->filter) {
+                $byFilter = $request->filter;
+                $value = $request->$byFilter;
+                $productCollection = Product::orderBy($byFilter, $value)->get();
+                $view = view('products-data',compact('productCollection'))->render();
             } else {
                 $view = view('products-data',compact('productCollection'))->render();
             }
@@ -147,15 +152,5 @@ class ProductController extends Controller
       $rating = 0;
       $rating = $avgStar->avg('rating');
       return view('view-product', compact('product','rating','rated')); 
-    }
-
-    public function findAction(Request $request)
-    {
-        if ($request->has('id')) {
-            return $this->edit($request->get('id'));
-        } else {
-            return $this->create($request);
-        }
-        return 'no action found';
     }
 }
