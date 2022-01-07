@@ -29,15 +29,24 @@ class ProductController extends Controller
     public function getProducts(Request $request)
     {
         $productCollection =  Product::paginate(6);
-
+        $categoryCollection = ProductCategory::all();
         if ($request->ajax()) {
             if(!!$request->search){
                 $productCollection = DB::table('products')->where('title','LIKE','%'.$request->search."%")->get();
                 $view = view('products-data',compact('productCollection'))->render();
             } elseif (!!$request->filter) {
-                $byFilter = $request->filter;
-                $value = $request->$byFilter;
-                $productCollection = Product::orderBy($byFilter, $value)->get();
+                $price = $request->price;
+                $category = $request->category;
+                if(!!$category){
+                    $productCollection = Product::query()->where('category_id','=',$category)->get();
+                }
+                if (!!$price) {
+                    if(!!$category){
+                        $productCollection = Product::query()->where('category_id','=',$category)->orderBy('price', $price)->get();
+                    } else {
+                        $productCollection = Product::query()->orderBy('price', $price)->get();
+                    }
+                } 
                 $view = view('products-data',compact('productCollection'))->render();
             } else {
                 $view = view('products-data',compact('productCollection'))->render();
@@ -45,7 +54,7 @@ class ProductController extends Controller
 
             return response()->json(['html'=>$view]);
         }
-        return view('products')->with("productCollection",$productCollection);
+        return view('products')->with("productCollection",$productCollection)->with("categoryCollection",$categoryCollection);
     }
 
     public function getProductCategories(Request $request)
