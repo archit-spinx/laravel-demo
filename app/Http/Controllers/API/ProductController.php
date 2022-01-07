@@ -82,14 +82,19 @@ class ProductController extends BaseController
             'special_price' => 'lt:price|numeric',
             'description'=>'required',
             'image' => 'mimes:png,jpg,jpeg|max:2048',
+            'category_id' => 'numeric',
         ]);
    
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
    
-        $product->name = $input['name'];
-        $product->detail = $input['detail'];
+        $product->title = $input['title'];
+        $product->price = $input['price'];
+        $product->special_price = $input['special_price'];
+        $product->description = $input['description'];
+        $product->image = $input['image'];
+        $product->category_id = $input['category_id'];
         $product->save();
    
         return $this->sendResponse(new ProductResource($product), 'Product updated successfully.');
