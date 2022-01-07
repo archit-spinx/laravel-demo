@@ -30,13 +30,12 @@ class ProductController extends BaseController
     public function store(Request $request)
     {
         $input = $request->all();
-   
+        
         $validator = Validator::make($input, [
             'title'=>'required',  
             'price'=>'required|gt:0|numeric',  
             'special_price' => 'lt:price|numeric',
             'description'=>'required',
-            'image' => 'required',
             'category_id' => 'numeric',
         ]);
    
@@ -75,29 +74,29 @@ class ProductController extends BaseController
      */
     public function update(Request $request, Product $product, $id)
     {
-        $product=Product::find($id); 
+      
+        $product = Product::find($id);
         $input = $request->all();
-   
+
         $validator = Validator::make($input, [
             'title'=>'required',  
             'price'=>'required|gt:0|numeric',  
             'special_price' => 'lt:price|numeric',
             'description'=>'required',
-            'image' => 'required',
             'category_id' => 'numeric',
         ]);
    
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
-   
+        
         $product->title = $input['title'];
         $product->price = $input['price'];
         $product->special_price = $input['special_price'];
         $product->description = $input['description'];
         $product->image = $input['image'];
         $product->category_id = $input['category_id'];
-        $product->save();
+        $product->update();
    
         return $this->sendResponse(new ProductResource($product), 'Product updated successfully.');
     }
