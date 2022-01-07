@@ -5,6 +5,7 @@
             	<label>{{ __($product->title) }}</label>
 
             	<div style="float: right;">
+                    <a class="btn btn-primary" href="/product/{{$product->id}}">View</a>
             		<a class="btn btn-primary" href="{{route('edit-product',$product->id)}}">Edit</a>
             		<a class="btn btn-danger" href="{{route('products').'/remove/'.$product->id}}">Delete</a>
             	</div>
@@ -17,10 +18,10 @@
             		@if($product->special_price)
             			<del>
             		@endif
-                	<label><b>Price:</b>  </label><span>{{ __($product->price) }}</span>$<br>
+                	<label><b>Price:</b>  </label>$<span>{{ __($product->price) }}</span><br>
                 	@if($product->special_price)
             			</del>
-            			<label><b>Sale Price:</b> </label><span>{{ __($product->special_price) }}</span>$
+            			<label><b>Sale Price:</b> </label>$<span>{{ __($product->special_price) }}</span>
             			<br>
             		@endif
                 	<p><b>Description:</b>  {{ __($product->description) }}</p>

@@ -11,16 +11,50 @@
     		<h2>{{ __($product->title) }}</h2>
     		<div class="product-rating">
     		  {{$rating}} Rating out of 5.00
-              <div class="br-wrapper br-theme-fontawesome-stars"><div class="br-widget">
-              	@for($i=0;$i<5;$i++)
-              	@if($rating > $i)
-              	<a class="br-selected"></a>
-              	@else
-              	<a class=""></a>
-              	@endif
-              	@endfor
-              </div></div>
-              
+    		  @if($rated == 1)
+              <div id="demo-2"></div>
+              <script>
+
+            $(function () {
+
+            $("#demo-2").jRate({
+                rating: {{$rating}},
+                strokeColor: 'black',
+                width:30,
+                height:30,
+                 startColor:"yellow",
+				endColor:"yellow",
+                readOnly:true
+            });
+        });
+    </script>
+              @else
+              <form method="post" id="ratingform" action="/review-submit">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{request()->id}}">
+                    <input type="hidden" name="rating" id="rating" value="">
+                </form>
+              	<div id="demo-1"></div>
+              	 <script>
+
+            $(function () {
+
+            $("#demo-1").jRate({
+                rating: {{$rating}},
+                strokeColor: 'black',
+                width:30,
+                height:30,
+                startColor:"yellow",
+				endColor:"yellow",
+
+                onSet: function(rating) {
+                    $("#rating").val(rating);
+                    $("#ratingform").submit();
+                }
+            });
+        });
+    </script>
+                @endif  
 			</div>
 			@if($product->special_price)
     			<del>
@@ -34,35 +68,6 @@
         	<p><b>Description:</b>  {{ __($product->description) }}</p>
     	</div>	
 
-    <div class="col-md-12 mt-4">
-    	<h2>Leave a Rating</h2>
-
-    <form method="post" action="/review-submit">
-    	@csrf
-    	<input type="hidden" name="product_id" value="{{request()->id}}">
-        <select id="example" name="rating">
-		  <option value="1">1</option>
-		  <option value="2">2</option>
-		  <option value="3">3</option>
-		  <option value="4">4</option>
-		  <option value="5" selected>5</option>
-		</select>
-		<input type="submit" name="submit" value="SUBMIT">
-    </form>
-	    @if(session()->has('message'))
-	<div class="alert alert-success">
-	    {{ session()->get('message') }}
-	</div>
-	@endif
-    </div>
     </div>
 </div>
-<script type="text/javascript">
-   $(function() {
-      $('#example').barrating({
-        theme: 'fontawesome-stars'
-      });
-   });
-
-</script>
 @endsection
