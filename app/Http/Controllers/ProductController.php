@@ -147,8 +147,10 @@ class ProductController extends Controller
         $product->category_id = $request->get('category'); 
         $product->price = $request->get('price');  
         $product->description = $request->get('description');  
-        $product->special_price = $request->get('special_price');
+        $product->special_price = $request->get('special_price');          
+        $product->category_id = $request->get('category_id');
 
+        
         if (isset($_FILES['image']) && !!$request->file('image')) {
             $file = $request->file('image');
             //Move Uploaded File
