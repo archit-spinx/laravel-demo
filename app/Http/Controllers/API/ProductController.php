@@ -36,7 +36,8 @@ class ProductController extends BaseController
             'price'=>'required|gt:0|numeric',  
             'special_price' => 'lt:price|numeric',
             'description'=>'required',
-            'image' => 'mimes:png,jpg,jpeg|max:2048',
+            'image' => 'required',
+            'category_id' => 'numeric',
         ]);
    
         if($validator->fails()){
@@ -72,8 +73,9 @@ class ProductController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product, $id)
     {
+        $product=Product::find($id); 
         $input = $request->all();
    
         $validator = Validator::make($input, [
@@ -81,7 +83,7 @@ class ProductController extends BaseController
             'price'=>'required|gt:0|numeric',  
             'special_price' => 'lt:price|numeric',
             'description'=>'required',
-            'image' => 'mimes:png,jpg,jpeg|max:2048',
+            'image' => 'required',
             'category_id' => 'numeric',
         ]);
    
@@ -106,8 +108,10 @@ class ProductController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id, Product $product)
     {
+
+        $product = Product::find($id);        
         $product->delete();
    
         return $this->sendResponse([], 'Product deleted successfully.');

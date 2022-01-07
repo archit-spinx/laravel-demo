@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Rating;
 use Illuminate\Routing\UrlGenerator;
 use DB;
+use Illuminate\Support\Facades\Http;
 class ProductController extends Controller
 {
     /**
@@ -27,7 +28,33 @@ class ProductController extends Controller
 
     public function getProducts(Request $request)
     {
+        $response = Http::get('http://localhost/projects/laravel-demo/public/api/products', []);
+        
+        /*echo "<pre>";
+        print_r( $response); exit;
+        
         $productCollection =  Product::paginate(6);
+        */
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'http://localhost/projects/laravel-demo/public/api/products',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        //echo $response;
+        echo "<pre>";
+        print_r( $response); exit;
 
         if ($request->ajax()) {
             if(!!$request->search){
