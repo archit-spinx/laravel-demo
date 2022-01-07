@@ -35,3 +35,5 @@ Route::post('/add-product-category', [App\Http\Controllers\ProductController::cl
 Route::get('/add-product-category/{id}', [App\Http\Controllers\ProductController::class, 'editCategory'])->name('edit.product.category');
 Route::post('/add-product-category/{id}', [App\Http\Controllers\ProductController::class, 'updateCategory'])->name('edit.product.category');
 Route::get('/product-categories/remove/{id}', [App\Http\Controllers\ProductController::class, 'destroyCategory'])->name('remove.product.category');
+
+Route::get('/shop', [App\Http\Controllers\ProductAPIController::class, 'index'])->name('shop');

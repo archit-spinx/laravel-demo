@@ -24,11 +24,11 @@
 						</div>
 					@endif
 			        @if(isset($product))
-			        <form action="{{ route('edit-product',$product->id) }}" method="POST" enctype="multipart/form-data">
+			        <form name="prod_form" action="{{ route('edit-product',$product->id) }}" method="POST" enctype="multipart/form-data">
 			        @else
-                	<form action="{{ route('add-product') }}" method="POST" enctype="multipart/form-data">
+                	<form name="prod_form" action="{{ route('add-product') }}" method="POST" enctype="multipart/form-data">
                 	@endif
-                		@csrf
+                		
                 		<div class="form-group mb-2">
 						    <label for="prod_name">Product Name</label>
 						    <input type="text" class="form-control" id="prod_name" placeholder="" name="title" value="{{ (isset($product)) ? $product->title : old('title') }}" required>
@@ -72,6 +72,7 @@
 						</div>
 						<br>
 						<button type="submit" class="btn btn-primary">{{ (isset($product)) ? 'Update Product' : 'Add Product' }}</button>
+						<button class="btn btn-primary {{ (isset($product)) ? 'update-product' : 'add-product' }} ">Using API {{ (isset($product)) ? 'Update Product' : 'Add Product' }}</button>
                 	</form>
                 </div>
             </div>

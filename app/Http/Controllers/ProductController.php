@@ -29,7 +29,7 @@ class ProductController extends Controller
 
     public function getProducts(Request $request)
     {
-        
+        $productCollection = Product::paginate(6);
         $categoryCollection = ProductCategory::all();
         if ($request->ajax()) {
             if(!!$request->search){

@@ -95,71 +95,47 @@ $(document).on('ready',function(){
     $("select[name='price']").on("change",function(e){
         e.preventDefault();
         filterForm();
-        /*$val = $(this).find(":selected").val();
-        $dataVal = $(this).attr('data-value');
-        if ($val != '') {
-            $.ajax(
-            {
-                url: '?filter=' + $dataVal,
-                data: {
-                    'price' : $val
-                },
-                type: "get",
-                beforeSend: function()
-                {
-                    $('.ajax-load').show();
-                }
-            })
-            .done(function(data)
-            {
-                if(data.html == ""){
-                    $('.ajax-load').html("No Products found");
-                    return;
-                }
-                $('.ajax-load').hide();
-                $(".all-products").html(data.html);
-                page = 0;
-            })
-            .fail(function(jqXHR, ajaxOptions, thrownError)
-            {
-                  alert('server not responding...');
-            });
-        }*/
     });
 
     $("select[name='category']").on("change",function(e){
         e.preventDefault();
         filterForm();
-        /*$val = $(this).find(":selected").val();
-        $dataVal = $(this).attr('data-value');
-        if ($val != '') {
-            $.ajax(
-            {
-                url: '?filter=' + $dataVal,
-                data: {
-                    'category_id' : $val
-                },
-                type: "get",
-                beforeSend: function()
-                {
-                    $('.ajax-load').show();
-                }
-            })
-            .done(function(data)
-            {
-                if(data.html == ""){
-                    $('.ajax-load').html("No Products found");
-                    return;
-                }
-                $('.ajax-load').hide();
-                $(".all-products").html(data.html);
-                page = 0;
-            })
-            .fail(function(jqXHR, ajaxOptions, thrownError)
-            {
-                  alert('server not responding...');
-            });
-        }*/
+    });
+
+    $(".product-delete").on("click",function(e){
+        e.preventDefault();
+        var $id = $(this).attr('data-id');
+        var settings = {
+          "url": "http://127.0.0.1:8000/api/product/delete/"+$id,
+          "method": "DELETE",
+          "timeout": 0,
+        };
+
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+          alert(response.message);
+
+        }).fail(function() {
+            console.log('Product Couldn\'t be deleted!!')
+        });
+    });
+
+    $(".add-product").on("click",function(e){
+        console.log("http://127.0.0.1:8000/api/product/create/"+$('form').serialize());
+        e.preventDefault();
+        var settings = {
+          "url": "http://spinx.local/projects-laravel/laravel-demo/public/api/product/create/",
+          "data": $('form').serialize(),
+          "method": "POST",
+          "timeout": 0,
+        };
+
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+          alert(response.message);
+        }).fail(function() {
+            console.log('Product Couldn\'t be Created!!')
+        });
     });
 
 });
