@@ -121,10 +121,9 @@ $(document).on('ready',function(){
     });
 
     $(".add-product").on("click",function(e){
-        console.log("http://127.0.0.1:8000/api/product/create/"+$('form').serialize());
         e.preventDefault();
         var settings = {
-          "url": "http://spinx.local/projects-laravel/laravel-demo/public/api/product/create/",
+          "url": "http://127.0.0.1:8000/api/product/create/",
           "data": $('form').serialize(),
           "method": "POST",
           "timeout": 0,
@@ -138,4 +137,21 @@ $(document).on('ready',function(){
         });
     });
 
+    $(".update-product").on("click",function(e){
+        e.preventDefault();
+        var $id = $("input[name='product_id']").val();
+        var settings = {
+          "url": "http://127.0.0.1:8000/api/product/update/"+$id,
+          "data": $('form').serialize(),
+          "method": "POST",
+          "timeout": 0,
+        };
+
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+          alert(response.message);
+        }).fail(function() {
+            console.log('Product Couldn\'t be Updated!!')
+        });
+    });
 });

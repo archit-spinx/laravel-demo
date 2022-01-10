@@ -73,7 +73,7 @@ class ProductController extends Controller
   
         $product = new Product;  
         $product->title =  $request->get('title');  
-        $product->category_id = $request->get('category'); 
+        $product->category_id = $request->get('category_id'); 
         $product->price = $request->get('price');  
         $product->description = $request->get('description');  
         $product->special_price = $request->get('special_price');  
@@ -136,7 +136,7 @@ class ProductController extends Controller
     {  
         $request->validate([  
             'title'=>'required',  
-            'category' => 'required',
+            'category_id' => 'required',
             'price'=>'required|gt:0|numeric',  
             'special_price' => 'lt:price|numeric',
             'description'=>'required',
@@ -145,7 +145,7 @@ class ProductController extends Controller
 
         $product = Product::find($id);  
         $product->title =  $request->get('title');  
-        $product->category_id = $request->get('category'); 
+        $product->category_id = $request->get('category_id'); 
         $product->price = $request->get('price');  
         $product->description = $request->get('description');  
         $product->special_price = $request->get('special_price');          
@@ -186,7 +186,7 @@ class ProductController extends Controller
     {
         return $request->validate([  
             'title'=>'required|unique:products,title',  
-            'category' => 'required',
+            'category_id' => 'required',
             'price'=>'required|gt:0|numeric',   
             'special_price' => 'lt:price|numeric',
             'description'=>'required',

@@ -24,18 +24,21 @@
 						</div>
 					@endif
 			        @if(isset($product))
-			        <form name="prod_form" action="{{ route('edit-product',$product->id) }}" method="POST" enctype="multipart/form-data">
+			        <form action="{{ route('edit-product',$product->id) }}" method="POST" enctype="multipart/form-data">
 			        @else
-                	<form name="prod_form" action="{{ route('add-product') }}" method="POST" enctype="multipart/form-data">
+                	<form action="{{ route('add-product') }}" method="POST" enctype="multipart/form-data">
                 	@endif
-                		
+                		@csrf
+                		@if(isset($product))
+                			<input type="hidden" name="product_id" value="{{ $product->id }}" />
+                		@endif
                 		<div class="form-group mb-2">
 						    <label for="prod_name">Product Name</label>
 						    <input type="text" class="form-control" id="prod_name" placeholder="" name="title" value="{{ (isset($product)) ? $product->title : old('title') }}" required>
 						</div>
 						<div class="form-group mb-2">
 							<label for="prod_name">Category</label>
-							<select class="form-select" name="category">
+							<select class="form-select" name="category_id">
 								<option value=""></option>
 								@foreach($categoryCollection as $category)
 									<?php
@@ -72,7 +75,7 @@
 						</div>
 						<br>
 						<button type="submit" class="btn btn-primary">{{ (isset($product)) ? 'Update Product' : 'Add Product' }}</button>
-						<button class="btn btn-primary {{ (isset($product)) ? 'update-product' : 'add-product' }} ">Using API {{ (isset($product)) ? 'Update Product' : 'Add Product' }}</button>
+						<button class="btn btn-primary {{ (isset($product)) ? 'update-product' : 'add-product' }}">{{ (isset($product)) ? 'Using API Update Product' : 'Using API Add Product' }}</button>
                 	</form>
                 </div>
             </div>
