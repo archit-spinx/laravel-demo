@@ -94,7 +94,9 @@ class ProductController extends BaseController
         $product->price = $input['price'];
         $product->special_price = $input['special_price'];
         $product->description = $input['description'];
-        $product->image = $input['image'];
+        if( isset($input['image']) ){
+            $product->image = $input['image'];
+        }
         $product->category_id = $input['category_id'];
         $product->update();
    
