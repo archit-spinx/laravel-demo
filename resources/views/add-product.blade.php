@@ -24,9 +24,9 @@
 						</div>
 					@endif
 			        @if(isset($product))
-			        <form action="{{ route('edit-product',$product->id) }}" method="POST" enctype="multipart/form-data">
+			        <form action="{{ route('edit-product',$product->id) }}" method="POST" enctype="multipart/form-data" id="update_form">
 			        @else
-                	<form action="{{ route('add-product') }}" method="POST" enctype="multipart/form-data">
+                	<form action="{{ route('add-product') }}" method="POST" enctype="multipart/form-data" id="insert_form">
                 	@endif
                 		@csrf
                 		@if(isset($product))
@@ -63,14 +63,12 @@
 						    <label for="prod_desc">Description</label>
 						    <textarea class="form-control" id="prod_desc" rows="4" name="description" value="{{ (isset($product)) ? $product->title : old('title') }}" required>{{ (isset($product)) ? $product->description : old('description') }}</textarea>
 						</div>
+						<input type="hidden" name="image" id="image">
 						<div class="form-group mb-2">
 						    <label for="prod_image">Choose Product Image</label>
+						    <input type="file" class="form-control-file" id="prod_image" onchange="encodeImageFileAsURL(this)" name="prod_image">
 						    @if(isset($product))
-						    <input type="file" id="prod_image" name="image"
-						     value="{{ __(URL::asset($product->image)) }}" />
-						    <img src="{{ __(URL::asset( $product->image)) }}" height="100" width="100">
-						    @else
-						    <input type="file" class="form-control-file" id="prod_image" name="image" value="{{ old('image') }}">
+						    <img src="{{ __($product->image) }}" id="product_image" height="100" width="100" >
 						    @endif
 						</div>
 						<br>

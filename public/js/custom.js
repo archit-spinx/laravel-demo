@@ -64,6 +64,18 @@ function filterForm(){
     });
 }
 
+var imagebase64 = "";  
+function encodeImageFileAsURL(element){
+    var file = element.files[0];  
+    var reader = new FileReader();  
+    reader.onloadend = function() {  
+        imagebase64 = reader.result;  
+        $("#image").val(imagebase64);
+        $("#product_image").attr("src",imagebase64);
+    }  
+    reader.readAsDataURL(file); 
+}
+
 $(document).on('ready',function(){
     $('#search').on('keyup',function(){
         $value = $(this).val();
@@ -114,7 +126,7 @@ $(document).on('ready',function(){
         $.ajax(settings).done(function (response) {
           console.log(response);
           alert(response.message);
-
+          location.reload();
         }).fail(function() {
             console.log('Product Couldn\'t be deleted!!')
         });
@@ -122,11 +134,17 @@ $(document).on('ready',function(){
 
     $(".add-product").on("click",function(e){
         e.preventDefault();
+        var form = $('#insert_form')[0];
+        var formdata = new FormData(form);
         var settings = {
-          "url": "http://127.0.0.1:8000/api/product/create/",
-          "data": $('form').serialize(),
-          "method": "POST",
-          "timeout": 0,
+            "enctype": 'multipart/form-data',
+            "method": "POST",
+            "url": "http://127.0.0.1:8000/api/product/create/",
+            "data": formdata,
+            "timeout": 0,
+            "processData": false,
+            "contentType": false,
+            "cache": false,
         };
 
         $.ajax(settings).done(function (response) {
@@ -140,11 +158,18 @@ $(document).on('ready',function(){
     $(".update-product").on("click",function(e){
         e.preventDefault();
         var $id = $("input[name='product_id']").val();
+        var form = $('#update_form')[0];
+        var formdata = new FormData(form);
+        formdata.delete('prod_image');
         var settings = {
-          "url": "http://127.0.0.1:8000/api/product/update/"+$id,
-          "data": $('form').serialize(),
-          "method": "POST",
-          "timeout": 0,
+            "enctype": 'multipart/form-data',
+            "method": "POST",
+            "url": "http://127.0.0.1:8000/api/product/update/"+$id,
+            "data": formdata,
+            "timeout": 0,
+            "processData": false,
+            "contentType": false,
+            "cache": false,
         };
 
         $.ajax(settings).done(function (response) {
