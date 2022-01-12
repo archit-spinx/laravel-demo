@@ -8,7 +8,7 @@
 	            <div class="card-header">
 	            	<label>{{ __($product['title']) }}</label>
 
-	            	<div style="float: right;">
+	            	<div style="float: right;" class="actions">
 	                    <a class="btn btn-primary" href="/product/{{$product['id']}}">View</a>
 	            		<a class="btn btn-primary" href="{{route('edit-product',$product['id'])}}">Edit</a>
 	            		<a class="btn btn-danger product-delete" href="javascript:;" data-id="{{ $product['id'] }}">Delete</a>

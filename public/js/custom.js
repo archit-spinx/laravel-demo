@@ -116,6 +116,7 @@ $(document).on('ready',function(){
 
     $(".product-delete").on("click",function(e){
         e.preventDefault();
+        var parent = $(this).parents('.products');
         var $id = $(this).attr('data-id');
         var settings = {
           "url": "http://127.0.0.1:8000/api/product/delete/"+$id,
@@ -124,9 +125,13 @@ $(document).on('ready',function(){
         };
 
         $.ajax(settings).done(function (response) {
-          console.log(response);
-          alert(response.message);
-          location.reload();
+            console.log(response);
+            if(response.success == true){
+                parent.remove();
+                alert(response.message);
+            } else {
+                alert(response.message);
+            }
         }).fail(function() {
             console.log('Product Couldn\'t be deleted!!')
         });
@@ -150,6 +155,7 @@ $(document).on('ready',function(){
         $.ajax(settings).done(function (response) {
           console.log(response);
           alert(response.message);
+          window.location.href = 'shop/';
         }).fail(function() {
             console.log('Product Couldn\'t be Created!!')
         });
