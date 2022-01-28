@@ -24,14 +24,32 @@
 						</div>
 					@endif
 			        @if(isset($product))
-			        <form action="{{ route('edit-product',$product->id) }}" method="POST" enctype="multipart/form-data">
+			        <form action="{{ route('edit-product',$product->id) }}" method="POST" enctype="multipart/form-data" id="update_form">
 			        @else
-                	<form action="{{ route('add-product') }}" method="POST" enctype="multipart/form-data">
+                	<form action="{{ route('add-product') }}" method="POST" enctype="multipart/form-data" id="insert_form">
                 	@endif
                 		@csrf
+                		@if(isset($product))
+                			<input type="hidden" name="product_id" value="{{ $product->id }}" />
+                		@endif
                 		<div class="form-group mb-2">
 						    <label for="prod_name">Product Name</label>
 						    <input type="text" class="form-control" id="prod_name" placeholder="" name="title" value="{{ (isset($product)) ? $product->title : old('title') }}" required>
+						</div>
+						<div class="form-group mb-2">
+							<label for="prod_name">Category</label>
+							<select class="form-select" name="category_id">
+								<option value=""></option>
+								@foreach($categoryCollection as $category)
+									<?php
+										$selected = '';
+										if (isset($product) && $category->id == $product->category_id) {
+											$selected = 'selected';
+										}
+									?>
+									<option value="{{ __($category->id) }}" <?= $selected ?> >{{ __($category->category_name) }}</option>
+								@endforeach
+							</select>
 						</div>
 						<div class="form-group mb-2">
 						    <label for="prod_price">Price</label>
@@ -45,18 +63,17 @@
 						    <label for="prod_desc">Description</label>
 						    <textarea class="form-control" id="prod_desc" rows="4" name="description" value="{{ (isset($product)) ? $product->title : old('title') }}" required>{{ (isset($product)) ? $product->description : old('description') }}</textarea>
 						</div>
+						<input type="hidden" name="image" id="image">
 						<div class="form-group mb-2">
 						    <label for="prod_image">Choose Product Image</label>
+						    <input type="file" class="form-control-file" id="prod_image" onchange="encodeImageFileAsURL(this)" name="prod_image">
 						    @if(isset($product))
-						    <input type="file" id="prod_image" name="image"
-						     value="{{ __(URL::asset($product->image)) }}" />
-						    <img src="{{ __(URL::asset( $product->image)) }}" height="100" width="100">
-						    @else
-						    <input type="file" class="form-control-file" id="prod_image" name="image" value="{{ old('image') }}">
+						    <img src="{{ __($product->image) }}" id="product_image" height="100" width="100" >
 						    @endif
 						</div>
 						<br>
 						<button type="submit" class="btn btn-primary">{{ (isset($product)) ? 'Update Product' : 'Add Product' }}</button>
+						<button class="btn btn-primary {{ (isset($product)) ? 'update-product' : 'add-product' }}">{{ (isset($product)) ? 'Using API Update Product' : 'Using API Add Product' }}</button>
                 	</form>
                 </div>
             </div>

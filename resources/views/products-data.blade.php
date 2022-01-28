@@ -12,7 +12,7 @@
             </div>
             <div class="card-body row">
             	<div class="col-md-12 text-center">
-            		<img src="{{ __( URL::asset($product->image) ) }}" width="250" height="250" class="rounded mx-auto d-block"/>
+            		<img src="{{ $product->image }}" width="250" height="250" class="rounded mx-auto d-block"/>
             	</div>
             	<div class="col-md-12">
             		@if($product->special_price)

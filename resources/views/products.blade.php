@@ -8,14 +8,27 @@
 				<label>{{ __('Search: ') }}</label>
 				<input type="text" class="form-controller" id="search" name="search" placeholder="Search Products. . ."></input>
 			</div>
-			<div class="form-group mb-4">
-				<label>{{ __('Filter By Price: ') }}</label>
-				<select class="form-select" name="filter_by_price" data-value="price">
-					<option value="">Select Option</option>
-					<option value="ASC">Low  To High</option>
-					<option value="DESC">High To Low</option>
-				</select>
-			</div>
+			<form name="filter">
+				<div class="form-group mb-4">
+					<label>{{ __('Filter By Price: ') }}</label>
+					<select class="form-select" name="price" data-value="price">
+						<option value="">Select Option</option>
+						<option value="ASC">Low  To High</option>
+						<option value="DESC">High To Low</option>
+					</select>
+				</div>
+				<div class="form-group mb-4">
+					<label>{{ __('Filter By Category: ') }}</label>
+					<select class="form-select" name="category" data-value="category_id">
+						<option value="">Select Option</option>
+						@if($categoryCollection)
+							@foreach($categoryCollection as $category)
+								<option value="{{ $category->id }}" >{{ $category->category_name }}</option>
+							@endforeach
+						@endif
+					</select>
+				</div>
+			</form>
 		</div>
 		<div class="col-md-10">
 			<div class="justify-content-center">
@@ -40,7 +53,7 @@
 				                </div>
 				                <div class="card-body row">
 				                	<div class="col-md-12 text-center">
-				                		<img src="{{ __( URL::asset($product->image) ) }}" width="250" height="250" class="rounded mx-auto d-block"/>
+				                		<img src="{{ $product->image }}" width="250" height="250" class="rounded mx-auto d-block"/>
 				                	</div>
 				                	<div class="col-md-12">
 				                		@if($product->special_price)
