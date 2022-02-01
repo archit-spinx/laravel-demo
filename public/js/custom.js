@@ -96,6 +96,7 @@ $(document).on('ready',function(){
             }
             $('.ajax-load').hide();
             $(".all-products").html(data.html);
+            console.log("above search " + data.html);
             page = 0;
         })
         .fail(function(jqXHR, ajaxOptions, thrownError)
@@ -103,6 +104,34 @@ $(document).on('ready',function(){
               alert('server not responding...');
         });
     });
+
+    // $('#side-search').on('keyup',function(){
+    //     $value = $(this).val();
+    //     $.ajax(
+    //     {
+    //         url: 'http://spinx.local/laravel-demo/public/api/search-product/' + $value,
+    //         type: "get",
+    //         beforeSend: function()
+    //         {
+    //             $('.ajax-load').show();
+    //         }
+    //     })
+    //     .done(function(data)
+    //     {
+    //         if(data == ""){
+    //             $('.ajax-load').html("No Products found");
+    //             return;
+    //         }
+    //         $('.ajax-load').hide();
+    //         $(".all-products").html(data);
+    //         console.log(data);
+    //         page = 0;
+    //     })
+    //     .fail(function(jqXHR, ajaxOptions, thrownError)
+    //     {
+    //           alert('server not responding...');
+    //     });
+    // });
 
     $("select[name='price']").on("change",function(e){
         e.preventDefault();

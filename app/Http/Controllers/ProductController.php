@@ -9,6 +9,9 @@ use App\Models\Rating;
 use Illuminate\Routing\UrlGenerator;
 use DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\Pool;
+use Illuminate\Support\Facades\Route;
+
 class ProductController extends Controller
 {
     /**
@@ -27,14 +30,30 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
+    function External() {
+        $data = Http::get('http://spinx.local/laravel-demo/public/api/products'); 
+        return $data;
+    }
+
+    // function Result(Request $request) {
+    //     $data = Http::get('http://spinx.local/laravel-demo/public/api/search-product/'.$request->search);
+    //     return $data;
+    // }
+
     public function getProducts(Request $request)
     {
-        $productCollection = Product::paginate(6);
+        // $productCollection = Product::paginate(6);
+        
         $categoryCollection = ProductCategory::all();
+        $products = $this->External()->json();
+
         if ($request->ajax()) {
             if(!!$request->search){
-                $productCollection = DB::table('products')->where('title','LIKE','%'.$request->search."%")->get();
-                $view = view('products-data',compact('productCollection'))->render();
+                $productCollection = Product::where('title','LIKE','%'.$request->search."%")->get();
+                // $product = $data = Http::get('http://spinx.local/laravel-demo/public/api/search-product/'.$request->search);
+                // $productside = json_decode(json_encode($productCollection), FALSE);
+                
+                $view = view('products-data',compact('$productCollection'))->render();
             } elseif (!!$request->filter) {
                 $price = $request->price;
                 $category = $request->category;
@@ -55,7 +74,7 @@ class ProductController extends Controller
 
             return response()->json(['html'=>$view]);
         }
-        return view('products')->with("productCollection",$productCollection)->with("categoryCollection",$categoryCollection);
+        return view('products',["productCollection" => $products['data']])->with("categoryCollection",$categoryCollection);
     }
 
     public function getProductCategories(Request $request)

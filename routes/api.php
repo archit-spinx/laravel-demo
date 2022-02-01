@@ -24,3 +24,5 @@ Route::get('product/single/{id}', 'App\Http\Controllers\API\ProductController@sh
 Route::post('product/create', 'App\Http\Controllers\API\ProductController@store');
 Route::post('product/update/{id}', 'App\Http\Controllers\API\ProductController@update');
 Route::delete('product/delete/{id}', 'App\Http\Controllers\API\ProductController@destroy');
+
+// Route::get('/search-product/{name}', [ProductController::class, 'searchName']);
