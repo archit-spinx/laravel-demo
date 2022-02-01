@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Validator;
 use App\Http\Resources\ProductResource as ProductResource;
    
@@ -115,4 +116,10 @@ class ProductController extends BaseController
    
         return $this->sendResponse([], 'Product deleted successfully.');
     }
+
+    // public function searchName($name) {
+    //     $products = Product::where('title', 'LIKE', "%$name%")->get();
+    //     return json_decode($products);
+    //     return $this->sendResponse(ProductResource::collection($products), 'Products find successfully.');
+    // }
 }
