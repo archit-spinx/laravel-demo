@@ -173,7 +173,7 @@ $(document).on('ready',function(){
         var settings = {
             "enctype": 'multipart/form-data',
             "method": "POST",
-            "url": "http://127.0.0.1:8000/api/product/create/",
+            "url": "http://127.0.0.1:8000/api/product/create",
             "data": formdata,
             "timeout": 0,
             "processData": false,
