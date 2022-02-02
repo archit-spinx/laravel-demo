@@ -45,6 +45,13 @@ class ProductController extends BaseController
         }
    
         $product = Product::create($input);
+        $product->title = $input['title'];
+        $product->price = $input['price'];
+        $product->special_price = $input['special_price'];
+        $product->description = $input['description'];
+        $product->image = $input['image'];
+        $product->category_id = $input['category_id'];
+        $product->update();
    
         return $this->sendResponse(new ProductResource($product), 'Product created successfully.');
     } 
