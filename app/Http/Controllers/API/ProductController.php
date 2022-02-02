@@ -44,14 +44,14 @@ class ProductController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());       
         }
    
-        $product = Product::create($input);
+        $product = new Product();
         $product->title = $input['title'];
         $product->price = $input['price'];
         $product->special_price = $input['special_price'];
         $product->description = $input['description'];
         $product->image = $input['image'];
         $product->category_id = $input['category_id'];
-        $product->update();
+        $product->save();
    
         return $this->sendResponse(new ProductResource($product), 'Product created successfully.');
     } 
