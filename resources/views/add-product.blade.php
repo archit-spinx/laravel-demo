@@ -73,7 +73,7 @@
 						</div>
 						<br>
 						<button type="submit" class="btn btn-primary {{ (isset($product)) ? 'update-product' : 'add-product' }}">{{ (isset($product)) ? 'Add Product' : 'Add Product' }}</button>
-						<a href="/products" class="btn btn-primary">Back</a>
+						<a href="{{ url('/products') }}" class="btn btn-primary">Back To Products</a>
                 	</form>
                 </div>
             </div>

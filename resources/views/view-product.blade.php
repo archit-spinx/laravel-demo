@@ -5,11 +5,14 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 <div class="container">
     <div class="row justify-content-center">
-
+		
     	<div class="col-md-6"><img src="{!! $product->image !!}" width="250" height="250" class="rounded mx-auto d-block"/></div>
     	<div class="col-md-6">
     		<h2>{{ __($product->title) }}</h2>
-    		<div class="product-rating">
+    		
+			@php
+			/*
+			<div class="product-rating">
     		  {{$rating}} Rating out of 5.00
     		  @if($rated == 1)
               <div id="demo-2"></div>
@@ -56,6 +59,8 @@
     </script>
                 @endif  
 			</div>
+			*/
+			@endphp
 			@if($product->special_price)
     			<del>
     		@endif
@@ -66,6 +71,7 @@
     			<br>
     		@endif
         	<p><b>Description:</b>  {{ __($product->description) }}</p>
+			<a href="{{ url('/products') }}" class="btn btn-primary">Back To Products</a>
     	</div>	
 
     </div>
