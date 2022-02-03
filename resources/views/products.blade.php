@@ -46,7 +46,7 @@
 				                	<label>{{ __($product['title']) }}</label>
 
 				                	<div style="float: right;">
-				                		<a class="btn btn-primary" href="/product/{{$product['id']}}">View</a>
+				                		<a class="btn btn-primary" href="product/{{$product['id']}}">View</a>
 				                		<a class="btn btn-primary" href="{{route('edit-product',$product['id'])}}">Edit</a>
 				                		<a class="btn btn-danger" href="{{route('products').'/remove/'.$product['id']}}">Delete</a>
 				                	</div>

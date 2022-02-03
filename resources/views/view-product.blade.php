@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row justify-content-center">
 
-    	<div class="col-md-6"><img src="{{ __( URL::asset($product->image) ) }}" width="250" height="250" class="rounded mx-auto d-block"/></div>
+    	<div class="col-md-6"><img src="{!! $product->image !!}" width="250" height="250" class="rounded mx-auto d-block"/></div>
     	<div class="col-md-6">
     		<h2>{{ __($product->title) }}</h2>
     		<div class="product-rating">
@@ -29,7 +29,7 @@
         });
     </script>
               @else
-              <form method="post" id="ratingform" action="/review-submit">
+              <form method="post" id="ratingform" action="review-submit">
                     @csrf
                     <input type="hidden" name="product_id" value="{{request()->id}}">
                     <input type="hidden" name="rating" id="rating" value="">
