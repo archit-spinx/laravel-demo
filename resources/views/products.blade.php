@@ -48,7 +48,7 @@
 				                	<div style="float: right;">
 				                		<a class="btn btn-primary" href="product/{{$product['id']}}">View</a>
 				                		<a class="btn btn-primary" href="{{route('edit-product',$product['id'])}}">Edit</a>
-				                		<a class="btn btn-danger" href="{{route('products').'/remove/'.$product['id']}}">Delete</a>
+				                		<a class="btn btn-danger" onclick="return confirm('Are you sure, do you want delete this product?')" href="{{route('products').'/remove/'.$product['id']}}">Delete</a>
 				                	</div>
 				                </div>
 				                <div class="card-body row">
