@@ -37,9 +37,9 @@
 					    {{ session()->get('message') }}
 					</div>
 				@endif
-		    	@if(count($productCollection) > 0)
+		    	@if(count($productCollection['data']) > 0)
 		    		<div class="all-products row">
-				    	@foreach($productCollection as $product)
+				    	@foreach($productCollection['data'] as $product)
 				        <div class="col-md-4 products" style="margin-bottom: 80px;">
 				            <div class="card">
 				                <div class="card-header">
@@ -71,9 +71,30 @@
 				            </div>
 				        </div>
 				        @endforeach
-				        <div class="ajax-load text-center" style="display:none">
-							<p>Loading More Products. . .</p>
+						
+						@if(count($productCollection['meta']) > 0)						
+						<div class="d-flex justify-content-center">
+							<ul class="list-inline">
+							@foreach($productCollection['meta']['links'] as $productpag)
+								@php
+									$paelen = array();							
+									if($productpag['url']){
+									$paelen = explode("?page=",$productpag['url']) ;							
+									}
+								@endphp
+								@if(!empty($paelen[1]))
+									<li class="list-inline-item">
+									<a href="?page={!! $paelen[1] !!}"> {!! $productpag['label'] !!}</a>
+									</li>
+								@endif
+							@endforeach
+							</ul>	
 						</div>
+						@endif					
+						
+				        <!-- <div class="ajax-load text-center" style="display:none">
+							<p>Loading More Products. . .</p>
+						</div> -->
 					</div>
 			    @else
 			    	<div class="col-md-12">
@@ -96,5 +117,5 @@
 		</div>
 	</div>
 </div>
-<input type="hidden" name="ajaxload" value="0" />
+<!-- <input type="hidden" name="ajaxload" value="0" /> -->
 @endsection

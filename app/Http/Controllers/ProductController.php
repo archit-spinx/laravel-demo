@@ -20,7 +20,8 @@ class ProductController extends Controller
      * @return void
      */
 
-    protected $url;
+    protected $url,$page;
+
 
     public function __construct(
         UrlGenerator $url
@@ -31,7 +32,12 @@ class ProductController extends Controller
     }
 
     function External() {
-        $data = Http::get('http://spinx.local/laravel-demo/public/api/products'); 
+        if(isset($_GET['page'])){
+            $page = '?page='.$_GET['page'];
+        }else{
+            $page = '';
+        }
+        $data = Http::get('http://spinx.local/projects/laravel-demo/public/api/products'.$page); 
         return $data;
     }
 
@@ -74,7 +80,7 @@ class ProductController extends Controller
 
             return response()->json(['html'=>$view]);
         }
-        return view('products',["productCollection" => $products['data']])->with("categoryCollection",$categoryCollection);
+        return view('products',["productCollection" => $products])->with("categoryCollection",$categoryCollection);
     }
 
     public function getProductCategories(Request $request)

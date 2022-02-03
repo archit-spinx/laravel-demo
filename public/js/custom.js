@@ -210,8 +210,12 @@ $(document).on('ready',function(){
         $.ajax(settings).done(function (response) {
           console.log(response);
           alert(response.message);
+          window.location.href = '/products';
         }).fail(function() {
             console.log('Product Couldn\'t be Updated!!')
         });
+    });
+    $(".back-product").on("click",function(e){
+        window.location.href = '/products';
     });
 });

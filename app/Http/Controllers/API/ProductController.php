@@ -8,6 +8,8 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use Validator;
 use App\Http\Resources\ProductResource as ProductResource;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
    
 class ProductController extends BaseController
 {
@@ -18,7 +20,7 @@ class ProductController extends BaseController
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate();
     
         return $this->sendResponse(ProductResource::collection($products), 'Products retrieved successfully.');
     }
@@ -102,7 +104,9 @@ class ProductController extends BaseController
         $product->price = $input['price'];
         $product->special_price = $input['special_price'];
         $product->description = $input['description'];
-        $product->image = $input['image'];
+        if (!is_null($input['image'])) {
+            $product->image = $input['image'];
+        }
         $product->category_id = $input['category_id'];
         $product->update();
    
