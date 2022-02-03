@@ -36,7 +36,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <form class="card-body" action="/search" method="GET" role="search">
+                    <!-- <form class="card-body" action="/search" method="GET" role="search">
                         @csrf
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search for..." name="q" value="<?php if(isset($_GET['q'])){ echo $_GET['q']; } ?>">
@@ -44,7 +44,7 @@
                         <button class="btn btn-secondary" type="submit">Search!</button>
                       </span>
                         </div>
-                    </form>
+                    </form> -->
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
