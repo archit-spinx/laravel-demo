@@ -72,8 +72,8 @@
 						    @endif
 						</div>
 						<br>
-						<button type="submit" class="btn btn-primary">{{ (isset($product)) ? 'Update Product' : 'Add Product' }}</button>
-						<button class="btn btn-primary {{ (isset($product)) ? 'update-product' : 'add-product' }}">{{ (isset($product)) ? 'Using API Update Product' : 'Using API Add Product' }}</button>
+						<button type="submit" class="btn btn-primary {{ (isset($product)) ? 'update-product' : 'add-product' }}">{{ (isset($product)) ? 'Add Product' : 'Add Product' }}</button>
+						<button type="submit" class="btn btn-primary back-product">Back</button>
                 	</form>
                 </div>
             </div>
