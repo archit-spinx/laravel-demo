@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\API\ProductController;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +20,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/products', function () {
+    return ProductResource::collection(Product::paginate(6));
+});
+//Route::get('products', 'App\Http\Controllers\API\ProductController@index');
+//Route::get('products', 'App\Http\Controllers\API\ProductController@index');
+Route::get('product/single/{id}', 'App\Http\Controllers\API\ProductController@show');
+Route::post('product/create', 'App\Http\Controllers\API\ProductController@store');
+Route::post('product/update/{id}', 'App\Http\Controllers\API\ProductController@update');
+Route::delete('product/delete/{id}', 'App\Http\Controllers\API\ProductController@destroy');
+
+// Route::get('/search-product/{name}', [ProductController::class, 'searchName']);

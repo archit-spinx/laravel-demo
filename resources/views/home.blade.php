@@ -14,7 +14,11 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    @guest
+                        {{ __('Please Login or Register for access this website.') }}
+                    @else
+                        {{ __('Welcome,'.Auth::user()->name) }}
+                    @endguest
                 </div>
             </div>
         </div>
