@@ -34,7 +34,7 @@
                 		@endif
                 		<div class="form-group mb-2">
 						    <label for="prod_name">Product Name</label>
-						    <input type="text" class="form-control" id="prod_name" placeholder="" name="title" value="{{ (isset($product)) ? $product->title : old('title') }}" required>
+						    <input type="text" class="form-control" id="prod_name" placeholder="" name="title" value="{{ (isset($product)) ? $product->title : old('title') }}" >
 						</div>
 						<div class="form-group mb-2">
 							<label for="prod_name">Category</label>
@@ -53,7 +53,7 @@
 						</div>
 						<div class="form-group mb-2">
 						    <label for="prod_price">Price</label>
-						    <input type="text" class="form-control" id="prod_price" placeholder="$" name="price" value="{{ (isset($product)) ? $product->price : old('price') }}" required>
+						    <input type="text" class="form-control" id="prod_price" placeholder="$" name="price" value="{{ (isset($product)) ? $product->price : old('price') }}" >
 						</div>
 						<div class="form-group mb-2">
 						    <label for="prod_special_price">Special Price</label>
@@ -61,7 +61,7 @@
 						</div>
 						<div class="form-group mb-2">
 						    <label for="prod_desc">Description</label>
-						    <textarea class="form-control" id="prod_desc" rows="4" name="description" value="{{ (isset($product)) ? $product->title : old('title') }}" required>{{ (isset($product)) ? $product->description : old('description') }}</textarea>
+						    <textarea class="form-control" id="prod_desc" rows="4" name="description" value="{{ (isset($product)) ? $product->title : old('title') }}" >{{ (isset($product)) ? $product->description : old('description') }}</textarea>
 						</div>
 						<input type="hidden" name="image" id="image" value="{{ (isset($product)) ? $product->image : '' }}">
 						<div class="form-group mb-2">

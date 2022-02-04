@@ -22,8 +22,7 @@ class ProductController extends Controller
      * @return void
      */
 
-    protected $url,$page;
-
+    protected $url;
 
     public function __construct(
         UrlGenerator $url
@@ -34,7 +33,8 @@ class ProductController extends Controller
     }
 
     function External() {
-        if(isset($_GET['page'])){
+		
+		if(isset($_GET['page'])){
             $page = '?page='.$_GET['page'];
         }else{
             $page = '';
@@ -225,7 +225,7 @@ class ProductController extends Controller
 
         // $product->save();  
 
-        return redirect()->back()->with('message', 'Product Updated Successfully');
+        return redirect()->route('products')->with('message', 'Product Updated Successfully');
     }  
 
     public function updateCategory(Request $request, $id)  
