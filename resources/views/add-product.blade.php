@@ -72,7 +72,7 @@
 						    @endif
 						</div>
 						<br>
-						<button type="submit" class="btn btn-primary {{ (isset($product)) ? 'update-product' : 'add-product' }}">{{ (isset($product)) ? 'Update Product' : 'Add Product' }}</button>
+						<button type="submit" class="btn btn-primary ">{{ (isset($product)) ? 'Update Product' : 'Add Product' }}</button>
 						<a href="{{ url('/products') }}" class="btn btn-primary">Back To Products</a>
                 	</form>
                 </div>
