@@ -34,17 +34,16 @@ class ProductController extends BaseController
     {
         $input = $request->all();
         
-        $validator = Validator::make($input, [
-            'title'=>'required',  
-            'price'=>'required|gt:0|numeric',  
-            'special_price' => 'lt:price|numeric',
-            'description'=>'required',
-            'category_id' => 'numeric',
-        ]);
+        // $validator = Validator::make($input, [
+        //     'title'=>'required',  
+        //     'price'=>'required|gt:0|numeric',  
+        //     'special_price' => 'numeric',
+        //     'category_id' => 'numeric'
+        // ]);
    
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
-        }
+        // if($validator->fails()){
+        //     return $this->sendError('Validation Error.', $validator->errors());       
+        // }
    
         $product = new Product();
         $product->title = $input['title'];
@@ -88,22 +87,22 @@ class ProductController extends BaseController
         $product = Product::find($id);
         $input = $request->all();
 
-        $validator = Validator::make($input, [
-            'title'=>'required',  
-            'price'=>'required|gt:0|numeric',  
-            'special_price' => 'lt:price|numeric',
-            'description'=>'required',
-            'category_id' => 'numeric',
-        ]);
+        // $validator = Validator::make($input, [
+        //     'title'=>'required',  
+        //     'price'=>'required|gt:0|numeric',  
+        //     'special_price' => 'numeric',
+        //     'category_id' => 'numeric',
+        // ]);
    
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
-        }
+        // if($validator->fails()){
+        //     return $this->sendError('Validation Error.', $validator->errors());       
+        // }
         
         $product->title = $input['title'];
         $product->price = $input['price'];
         $product->special_price = $input['special_price'];
         $product->description = $input['description'];
+
         if (!is_null($input['image'])) {
             $product->image = $input['image'];
         }

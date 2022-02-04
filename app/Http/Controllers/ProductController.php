@@ -11,6 +11,8 @@ use DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\Route;
+use GuzzleHttp\Client;
+use GuzzleHttp\Client\Request as ClientRequest;
 
 class ProductController extends Controller
 {
@@ -37,7 +39,7 @@ class ProductController extends Controller
         }else{
             $page = '';
         }
-        $data = Http::get('http://spinx.local/projects/laravel-demo/public/api/products'.$page); 
+        $data = Http::get('http://spinx.local/projects-laravel/laravel-demo/public/api/products'.$page); 
         return $data;
     }
 
@@ -95,25 +97,42 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         $this->validateProductRequest($request);
-  
-        $product = new Product;  
-        $product->title =  $request->get('title');  
-        $product->category_id = $request->get('category_id'); 
-        $product->price = $request->get('price');  
-        $product->description = $request->get('description');  
-        $product->special_price = $request->get('special_price');  
 
-        if (isset($_FILES['image']) && !!$request->file('image')) {
-            $file = $request->file('image');
-            //Move Uploaded File
+        $data = [
+            "title" => $request->get('title'),
+            "category_id" => $request->get('category_id'),
+            "price" => $request->get('price'),
+            "description" => $request->get('description'),
+            "special_price" => $request->get('special_price'),
+            "image" => $request->get('image'),
+        ];
 
-            $destinationPath = 'uploads';
+        $client = new Client();
+        $apiRequest = $client->post(
+            'http://spinx.local/projects-laravel/laravel-demo/public/api/product/create', 
+            [
+                'form_params'=> $data,
+            ]
+        );
 
-            $file->move($destinationPath,$file->getClientOriginalName());
+        // $product = new Product;  
+        // $product->title =  $request->get('title');  
+        // $product->category_id = $request->get('category_id'); 
+        // $product->price = $request->get('price');  
+        // $product->description = $request->get('description');  
+        // $product->special_price = $request->get('special_price');  
 
-            $product->image = $destinationPath.'/'.$file->getClientOriginalName();
-        }
-        $product->save();  
+        // if (isset($_FILES['image']) && !!$request->file('image')) {
+        //     $file = $request->file('image');
+        //     //Move Uploaded File
+
+        //     $destinationPath = 'uploads';
+
+        //     $file->move($destinationPath,$file->getClientOriginalName());
+
+        //     $product->image = $destinationPath.'/'.$file->getClientOriginalName();
+        // }
+        // $product->save();  
 
         return redirect(route('products'))->with('message', 'New Product Added Successfully');
     }
@@ -163,32 +182,48 @@ class ProductController extends Controller
             'title'=>'required',  
             'category_id' => 'required',
             'price'=>'required|gt:0|numeric',  
-            'special_price' => 'lt:price|numeric',
-            'description'=>'required',
-            'image' => 'mimes:png,jpg,jpeg|max:2048',
+            'special_price' => 'numeric',
         ]);
 
-        $product = Product::find($id);  
-        $product->title =  $request->get('title');  
-        $product->category_id = $request->get('category_id'); 
-        $product->price = $request->get('price');  
-        $product->description = $request->get('description');  
-        $product->special_price = $request->get('special_price');          
-        $product->category_id = $request->get('category_id');
+        $updateApi = 'http://spinx.local/projects-laravel/laravel-demo/public/api/product/update/'.$id;
+        $data = [
+            "title" => $request->get('title'),
+            "category_id" => $request->get('category_id'),
+            "price" => $request->get('price'),
+            "description" => $request->get('description'),
+            "special_price" => $request->get('special_price'),
+            'image' =>  $request->get('image') 
+        ];
+
+        $client = new Client();
+        $apiRequest = $client->post(
+            $updateApi, 
+            [
+                'form_params'=> $data,
+            ]
+        );
+
+        // $product = Product::find($id);  
+        // $product->title =  $request->get('title');  
+        // $product->category_id = $request->get('category_id'); 
+        // $product->price = $request->get('price');  
+        // $product->description = $request->get('description');  
+        // $product->special_price = $request->get('special_price');          
+        // $product->category_id = $request->get('category_id');
 
         
-        if (isset($_FILES['image']) && !!$request->file('image')) {
-            $file = $request->file('image');
-            //Move Uploaded File
+        // if (isset($_FILES['image']) && !!$request->file('image')) {
+        //     $file = $request->file('image');
+        //     //Move Uploaded File
 
-            $destinationPath = 'uploads';
+        //     $destinationPath = 'uploads';
 
-            $file->move($destinationPath,$file->getClientOriginalName());
+        //     $file->move($destinationPath,$file->getClientOriginalName());
 
-            $product->image = $destinationPath.'/'.$file->getClientOriginalName();
-        }
+        //     $product->image = $destinationPath.'/'.$file->getClientOriginalName();
+        // }
 
-        $product->save();  
+        // $product->save();  
 
         return redirect()->back()->with('message', 'Product Updated Successfully');
     }  
@@ -213,9 +248,8 @@ class ProductController extends Controller
             'title'=>'required|unique:products,title',  
             'category_id' => 'required',
             'price'=>'required|gt:0|numeric',   
-            'special_price' => 'lt:price|numeric',
-            'description'=>'required',
-            'image' => 'mimes:png,jpg,jpeg|max:2048',
+            'special_price' => 'numeric',
+            'image' => 'required',
         ]);
     }
 

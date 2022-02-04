@@ -57,22 +57,22 @@
 						</div>
 						<div class="form-group mb-2">
 						    <label for="prod_special_price">Special Price</label>
-						    <input type="text" class="form-control" id="prod_special_price" placeholder="$" name="special_price" value="{{ (isset($product)) ? $product->special_price : old('special_price') }}" >
+						    <input type="text" class="form-control" id="prod_special_price" placeholder="$" name="special_price" value="{{ (isset($product)) ? $product->special_price : 0 }}" >
 						</div>
 						<div class="form-group mb-2">
 						    <label for="prod_desc">Description</label>
 						    <textarea class="form-control" id="prod_desc" rows="4" name="description" value="{{ (isset($product)) ? $product->title : old('title') }}" required>{{ (isset($product)) ? $product->description : old('description') }}</textarea>
 						</div>
-						<input type="hidden" name="image" id="image">
+						<input type="hidden" name="image" id="image" value="{{ (isset($product)) ? $product->image : '' }}">
 						<div class="form-group mb-2">
 						    <label for="prod_image">Choose Product Image</label>
-						    <input type="file" class="form-control-file" id="prod_image" onchange="encodeImageFileAsURL(this)" name="prod_image">
+						    <input type="file" class="form-control-file" id="prod_image" onchange="encodeImageFileAsURL(this)" name="prod_image" >
 						    @if(isset($product))
 						    <img src="{{ __($product->image) }}" id="product_image" height="100" width="100" >
 						    @endif
 						</div>
 						<br>
-						<button type="submit" class="btn btn-primary {{ (isset($product)) ? 'update-product' : 'add-product' }}">{{ (isset($product)) ? 'Add Product' : 'Add Product' }}</button>
+						<button type="submit" class="btn btn-primary {{ (isset($product)) ? 'update-product' : 'add-product' }}">{{ (isset($product)) ? 'Update Product' : 'Add Product' }}</button>
 						<a href="{{ url('/products') }}" class="btn btn-primary">Back To Products</a>
                 	</form>
                 </div>
