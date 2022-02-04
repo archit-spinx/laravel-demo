@@ -34,7 +34,7 @@
 				      			Edit
 				      		</a>
 				      		<a href="{{route('remove.product.category',$category->id)}}"  
-							 	onclick="return confirm('Are you sure, do you want delete this category?')"
+								onclick="return confirm('Are you sure, do you want delete this category?')"
 				      			class="btn btn-danger">
 				      			Delete
 				      		</a>

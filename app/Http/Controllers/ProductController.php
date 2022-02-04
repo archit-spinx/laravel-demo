@@ -20,8 +20,7 @@ class ProductController extends Controller
      * @return void
      */
 
-    protected $url,$page;
-
+    protected $url;
 
     public function __construct(
         UrlGenerator $url
@@ -32,12 +31,13 @@ class ProductController extends Controller
     }
 
     function External() {
-        if(isset($_GET['page'])){
+		
+		if(isset($_GET['page'])){
             $page = '?page='.$_GET['page'];
         }else{
             $page = '';
         }
-        $data = Http::get('http://spinx.local/projects/laravel-demo/public/api/products'.$page); 
+        $data = Http::get('http://php73.spinxweb.net/laravel/public/api/products'.$page); 
         return $data;
     }
 
@@ -94,8 +94,16 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
-        $this->validateProductRequest($request);
-  
+        //$this->validateProductRequest($request);
+		
+		$request->validate([  
+            'title'=>'required',  
+            'category_id' => 'required',
+            'price'=>'required|gt:0|numeric',  
+            'special_price' => 'lt:price|numeric',
+            'description'=>'required',            
+        ]);
+		
         $product = new Product;  
         $product->title =  $request->get('title');  
         $product->category_id = $request->get('category_id'); 
@@ -162,10 +170,8 @@ class ProductController extends Controller
         $request->validate([  
             'title'=>'required',  
             'category_id' => 'required',
-            'price'=>'required|gt:0|numeric',  
-            'special_price' => 'lt:price|numeric',
-            'description'=>'required',
-            'image' => 'mimes:png,jpg,jpeg|max:2048',
+            'price'=>'required|gt:0|numeric',             
+            'description'=>'required',            
         ]);
 
         $product = Product::find($id);  
@@ -177,6 +183,7 @@ class ProductController extends Controller
         $product->category_id = $request->get('category_id');
 
         
+		
         if (isset($_FILES['image']) && !!$request->file('image')) {
             $file = $request->file('image');
             //Move Uploaded File
@@ -190,7 +197,7 @@ class ProductController extends Controller
 
         $product->save();  
 
-        return redirect()->back()->with('message', 'Product Updated Successfully');
+        return redirect()->route('products')->with('message', 'Product Updated Successfully');
     }  
 
     public function updateCategory(Request $request, $id)  
@@ -212,8 +219,7 @@ class ProductController extends Controller
         return $request->validate([  
             'title'=>'required|unique:products,title',  
             'category_id' => 'required',
-            'price'=>'required|gt:0|numeric',   
-            'special_price' => 'lt:price|numeric',
+            'price'=>'required|gt:0|numeric',
             'description'=>'required',
             'image' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
