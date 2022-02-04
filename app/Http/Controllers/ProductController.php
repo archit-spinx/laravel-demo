@@ -11,6 +11,7 @@ use DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Client\Response;
 
 class ProductController extends Controller
 {
@@ -37,7 +38,7 @@ class ProductController extends Controller
         }else{
             $page = '';
         }
-        $data = Http::get('http://php73.spinxweb.net/laravel/public/api/products'.$page); 
+        $data = Http::get(env("API_URL").'/api/products'.$page); 
         return $data;
     }
 
@@ -94,23 +95,32 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
-        //$this->validateProductRequest($request);
-		
+        
+
 		$request->validate([  
-            'title'=>'required',  
+            'title'=>'required|unique:products,title',  
             'category_id' => 'required',
-            'price'=>'required|gt:0|numeric',  
-            'special_price' => 'lt:price|numeric',
+            'price'=>'required|gt:0|numeric',
             'description'=>'required',            
         ]);
 		
-        $product = new Product;  
+        $response = Http::post(env("API_URL").'/api/product/create', [
+            'title' => $request->get('title'),
+            'category_id' => $request->get('category_id'),
+            'price' => $request->get('price'),
+            'description' => $request->get('description'),
+            'special_price' => $request->get('special_price'),
+            'image' => $request->get('image'),
+        ]);          
+        
+        /* $product = new Product;  
         $product->title =  $request->get('title');  
         $product->category_id = $request->get('category_id'); 
         $product->price = $request->get('price');  
         $product->description = $request->get('description');  
-        $product->special_price = $request->get('special_price');  
-
+        $product->special_price = $request->get('special_price');
+        $product->image = $request->get('image');   
+       
         if (isset($_FILES['image']) && !!$request->file('image')) {
             $file = $request->file('image');
             //Move Uploaded File
@@ -121,9 +131,14 @@ class ProductController extends Controller
 
             $product->image = $destinationPath.'/'.$file->getClientOriginalName();
         }
-        $product->save();  
-
+        $product->save(); 
+        */       
+        
+        if($response->successful()){
         return redirect(route('products'))->with('message', 'New Product Added Successfully');
+        }else{         
+         return redirect(route('add-product'))->with('message', 'Error on create Product');
+        }
     }
 
     public function createCategory(Request $request)
@@ -151,10 +166,12 @@ class ProductController extends Controller
         return view('add-product-category', compact('category'));  
     }
 
-    public function destroy($id)  
+    public function destroy(Product $product, $id)  
     {  
-        $product = Product::find($id);  
-        $product->delete();  
+        
+        $response = Http::delete(env("API_URL").'/api/product/delete/'.$id);
+        //$product = Product::find($id);  
+        //$product->delete();  
         return redirect()->back()->with('message', 'Product Deleted Successfully');
     }  
 
@@ -174,15 +191,14 @@ class ProductController extends Controller
             'description'=>'required',            
         ]);
 
-        $product = Product::find($id);  
+        /* $product = Product::find($id);  
         $product->title =  $request->get('title');  
         $product->category_id = $request->get('category_id'); 
         $product->price = $request->get('price');  
         $product->description = $request->get('description');  
         $product->special_price = $request->get('special_price');          
         $product->category_id = $request->get('category_id');
-
-        
+        $product->image = $request->get('image');            
 		
         if (isset($_FILES['image']) && !!$request->file('image')) {
             $file = $request->file('image');
@@ -194,10 +210,24 @@ class ProductController extends Controller
 
             $product->image = $destinationPath.'/'.$file->getClientOriginalName();
         }
+        $product->save(); 
+         */ 
 
-        $product->save();  
+        $response = Http::post(env("API_URL").'/api/product/update/'.$id, [
+            'title' => $request->get('title'),
+            'category_id' => $request->get('category_id'),
+            'price' => $request->get('price'),
+            'description' => $request->get('description'),
+            'special_price' => $request->get('special_price'),
+            'image' => $request->get('image'),
+        ]);
 
-        return redirect()->route('products')->with('message', 'Product Updated Successfully');
+        if($response->successful()){
+            return redirect()->route('products')->with('message', 'Product Updated Successfully');
+        }else{         
+            return redirect(route('add-product'))->with('message', 'Error On Updated Product');
+        }
+        
     }  
 
     public function updateCategory(Request $request, $id)  

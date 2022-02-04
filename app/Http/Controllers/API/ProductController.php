@@ -122,8 +122,10 @@ class ProductController extends BaseController
     public function destroy($id, Product $product)
     {
 
-        $product = Product::find($id);        
-        $product->delete();
+        $product = Product::find($id); 
+        $product->status = 0; 
+        $product->update();      
+        //$product->delete();
    
         return $this->sendResponse([], 'Product deleted successfully.');
     }
