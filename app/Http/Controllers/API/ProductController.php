@@ -130,9 +130,40 @@ class ProductController extends BaseController
         return $this->sendResponse([], 'Product deleted successfully.');
     }
 
-    // public function searchName($name) {
-    //     $products = Product::where('title', 'LIKE', "%$name%")->get();
-    //     return json_decode($products);
-    //     return $this->sendResponse(ProductResource::collection($products), 'Products find successfully.');
-    // }
+    public function searchName($name = null) {
+        if (is_null($name)) {
+            $products = Product::where('title', 'LIKE', "%$name%")->get();
+            //return json_decode($products);
+            return view('products-data',["productCollection" => $products]);
+        } else {
+            $productCollection = Product::all();
+            return view('products-data',["productCollection" => $productCollection]);
+        }
+    }
+
+    public function filterPrice(Request $request) {
+
+        $price = $request->price;
+        $category = $request->category;
+        if($category){
+            $productCollect = Product::query()->where('category_id','=',$category)->get();
+            return view('products-data',["productCollection" => $productCollection]);
+        } else {
+            $productCollection = Product::all();
+            return view('products-data',["productCollection" => $productCollection]);
+        }
+        if ($price) {
+            if($category){
+                $productCollection = Product::query()->where('category_id','=',$category)->orderBy('price', $price)->get();
+                return view('products-data',["productCollection" => $productCollection]);
+            } else {
+                $productCollection = Product::query()->orderBy('price', $price)->get();
+                return view('products-data',["productCollection" => $productCollection]);
+            }
+        } else {
+            $productCollection = Product::all();
+            return view('products-data',["productCollection" => $productCollection]);
+        }
+}
+
 }

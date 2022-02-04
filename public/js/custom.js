@@ -40,7 +40,7 @@ function loadMoreData(page){
 function filterForm(){
     $.ajax(
     {
-        url: '?filter=1',
+        url: 'http://spinx.local/laravel-demo/public/api/filter',
         type: "get",
         data: $("form[name='filter']").serialize(),
         beforeSend: function()
@@ -50,12 +50,12 @@ function filterForm(){
     })
     .done(function(data)
     {
-        if(data.html == ""){
+        if(data == ""){
             $('.ajax-load').html("No Products found");
             return;
         }
         $('.ajax-load').hide();
-        $(".all-products").html(data.html);
+        $(".all-products").html(data);
         page = 0;
     })
     .fail(function(jqXHR, ajaxOptions, thrownError)
@@ -105,33 +105,43 @@ $(document).on('ready',function(){
         });
     });
 
-    // $('#side-search').on('keyup',function(){
-    //     $value = $(this).val();
-    //     $.ajax(
-    //     {
-    //         url: 'http://spinx.local/laravel-demo/public/api/search-product/' + $value,
-    //         type: "get",
-    //         beforeSend: function()
-    //         {
-    //             $('.ajax-load').show();
-    //         }
-    //     })
-    //     .done(function(data)
-    //     {
-    //         if(data == ""){
-    //             $('.ajax-load').html("No Products found");
-    //             return;
-    //         }
-    //         $('.ajax-load').hide();
-    //         $(".all-products").html(data);
-    //         console.log(data);
-    //         page = 0;
-    //     })
-    //     .fail(function(jqXHR, ajaxOptions, thrownError)
-    //     {
-    //           alert('server not responding...');
-    //     });
-    // });
+    $('#side-search').on('keyup',function(){
+        var time_out_id=0;
+        var min_length=3;
+        var value = $(this).val();
+        if (typeof value != 'undefined' && value != 'na' && value != '') {
+            if (value.length >= min_length) {
+            if(time_out_id != 0) clearTimeout(time_out_id);
+
+                time_out_id = setTimeout(function(){
+                    $.ajax(
+                    {
+                        url: 'http://spinx.local/laravel-demo/public/api/search-product/' + value,
+                        type: "get",
+                        beforeSend: function()
+                        {
+                            $('.ajax-load').show();
+                        }
+                    })
+                    .done(function(data)
+                    {
+                        if(data == ""){
+                            $('.ajax-load').html("No Products found");
+                            return;
+                        }
+                        $('.ajax-load').hide();
+                        $(".all-products").html(data);
+                        console.log(data);
+                        page = 0;
+                    })
+                    .fail(function(jqXHR, ajaxOptions, thrownError)
+                    {
+                        alert('server not responding...');
+                    });
+                }, 250);
+            }
+        }
+    });
 
     $("select[name='price']").on("change",function(e){
         e.preventDefault();
