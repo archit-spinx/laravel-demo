@@ -9,6 +9,7 @@ use App\Models\ProductCategory;
 use Validator;
 use App\Http\Resources\ProductResource as ProductResource;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
    
 class ProductController extends BaseController
@@ -128,9 +129,53 @@ class ProductController extends BaseController
         return $this->sendResponse([], 'Product deleted successfully.');
     }
 
-    // public function searchName($name) {
-    //     $products = Product::where('title', 'LIKE', "%$name%")->get();
-    //     return json_decode($products);
-    //     return $this->sendResponse(ProductResource::collection($products), 'Products find successfully.');
-    // }
+    public function searchName($name = null) {
+        if (is_null($name)) {
+            $products = Product::where('title', 'LIKE', "%$name%")->get();
+            //return json_decode($products);
+            return view('products-data',["productCollection" => $products]);
+        } else {
+            $productCollection = Product::all();
+            return view('products-data',["productCollection" => $productCollection]);
+        }
+    }
+
+    public function filterPrice(Request $request) {
+
+            $price = $request->price;
+            $category = $request->category;
+            if($category){
+                if(isset($_GET['page'])){
+                    $page = '?page='.$_GET['page'];
+                }else{
+                    $page = '';
+                }
+                $productCollect = Product::query()->where('category_id','=',$category)->get();
+                // $productCollection = $this->arrayPaginator($productCollect);
+                return view('products-data',["productCollection" => $productCollection]);
+            } else {
+                $productCollection = Product::all();
+                return view('products-data',["productCollection" => $productCollection]);
+            }
+            if ($price) {
+                if($category){
+                    $productCollection = Product::query()->where('category_id','=',$category)->orderBy('price', $price)->get();
+                    return view('products-data',["productCollection" => $productCollection]);
+                } else {
+                    $productCollection = Product::query()->orderBy('price', $price)->get();
+                    return view('products-data',["productCollection" => $productCollection]);
+                }
+            } else {
+                $productCollection = Product::all();
+                return view('products-data',["productCollection" => $productCollection]);
+            }
+    }
+
+    public function arrayPaginator($data){
+        $page = request()->get('page', 1);
+        $perPage =  request()->get('perPage', 3);
+        $offset = ($page * $perPage) - $perPage;
+        return new LengthAwarePaginator(array_slice($data, $offset, $perPage, true), count($data), $perPage, $page,
+        ['path' => Paginator::resolveCurrentPath()]);
+    }
 }
