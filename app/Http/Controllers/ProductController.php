@@ -164,8 +164,10 @@ class ProductController extends Controller
 
     public function destroy($id)  
     {  
-        $product = Product::find($id);  
-        $product->delete();  
+        $response = Http::delete('http://spinx.local/projects-laravel/laravel-demo/public/api/product/delete/'.$id); 
+        
+        // $product = Product::find($id);  
+        // $product->delete();  
         return redirect()->back()->with('message', 'Product Deleted Successfully');
     }  
 
