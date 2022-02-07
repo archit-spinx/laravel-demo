@@ -39,7 +39,7 @@ Route::get('/product-categories/remove/{id}', [App\Http\Controllers\ProductContr
 Route::get('/shop', [App\Http\Controllers\ProductAPIController::class, 'index'])->name('shop');
 
 
-
+Route::get('/admin', [App\Http\Controllers\AdminController::class, 'dashboard'])->middleware(['admin']);
 
 Route::get('/admin/pages', [App\Http\Controllers\AdminController::class, 'pages'])->middleware(['admin']);
 Route::get('/admin/pages/add', [App\Http\Controllers\AdminController::class, 'addPages'])->middleware(['admin']);
