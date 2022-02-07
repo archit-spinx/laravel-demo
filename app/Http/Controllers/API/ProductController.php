@@ -130,8 +130,8 @@ class ProductController extends BaseController
         return $this->sendResponse([], 'Product deleted successfully.');
     }
 
-    public function searchName($name = null) {
-        if (is_null($name)) {
+    public function searchName($name) {
+        if (!is_null($name)) {
             $products = Product::where('title', 'LIKE', "%$name%")->get();
             //return json_decode($products);
             return view('products-data',["productCollection" => $products]);
@@ -146,10 +146,7 @@ class ProductController extends BaseController
         $price = $request->price;
         $category = $request->category;
         if($category){
-            $productCollect = Product::query()->where('category_id','=',$category)->get();
-            return view('products-data',["productCollection" => $productCollection]);
-        } else {
-            $productCollection = Product::all();
+            $productCollection = Product::query()->where('category_id','=',$category)->get();
             return view('products-data',["productCollection" => $productCollection]);
         }
         if ($price) {
@@ -164,6 +161,5 @@ class ProductController extends BaseController
             $productCollection = Product::all();
             return view('products-data',["productCollection" => $productCollection]);
         }
-}
-
+    }
 }
