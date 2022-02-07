@@ -140,7 +140,33 @@ $(document).ready(function () {
                     });
                 }, 250);
             }
+        } else {
+            $.ajax(
+                {
+                    url: 'http://spinx.local/laravel-demo/public/api/search-product',
+                    type: "get",
+                    beforeSend: function()
+                    {
+                        $('.ajax-load').show();
+                    }
+                })
+                .done(function(data)
+                {
+                    if(data == ""){
+                        $('.ajax-load').html("No Products found");
+                        return;
+                    }
+                    $('.ajax-load').hide();
+                    $(".all-products").html(data);
+                    console.log("above search " + data);
+                    page = 0;
+                })
+                .fail(function(jqXHR, ajaxOptions, thrownError)
+                {
+                      alert('server not responding...');
+                });
         }
+
     });
 
     $("select[name='price']").on("change",function(e){
