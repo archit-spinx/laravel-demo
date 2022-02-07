@@ -76,7 +76,7 @@ function encodeImageFileAsURL(element){
     reader.readAsDataURL(file); 
 }
 
-$(document).on('ready',function(){
+$(document).ready(function () {
     $('#search').on('keyup',function(){
         $value = $(this).val();
         $.ajax(
