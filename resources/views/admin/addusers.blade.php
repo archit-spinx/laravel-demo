@@ -13,7 +13,7 @@
     </ul>
 </div>
 @endif
-<form class="py-4" action="/admin/users/add" method="POST">
+<form class="py-4" action="" method="POST">
 	@csrf
   <div class="input_field mb-3">
 <label>Name</label>

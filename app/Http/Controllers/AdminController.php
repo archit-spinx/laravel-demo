@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\models\Pages;
-use App\models\Users;
+
+use App\models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Auth;
+use Mail;
 
 class AdminController extends Controller
 {
@@ -23,9 +26,8 @@ class AdminController extends Controller
     public function savePage(Request $req){
         $page = new Pages;
         $req->validate([
-            'page_title' => 'required|max:255',
-            'pagecontent'=> 'required|unique:pages,title,',
-
+            'page_title' => 'required|max:255|unique:pages,title,',
+            'pagecontent'=> 'required',
         ],
          [
                 'page_title.required' => 'Page Title is required',
@@ -49,14 +51,15 @@ class AdminController extends Controller
     function updatePage(Request $req){
             
          $req->validate([
-            'page_title' => 'required|max:255',
-            'pagecontent'=> 'required|unique:pages,title,',
+
+            'page_title' => 'required|max:255|unique:pages,title,'.$req->id,
+            'pagecontent'=> 'required',
 
         ],
          [
                 'page_title.required' => 'Page Title is required',
                 'pagecontent.required' => 'Content is required',
-                'pagecontent.unique' => 'Page title is already exists',
+                'page_title.unique' => 'Page title is already exists',
         ]);
 
         $data = Pages::find($req->id);
@@ -75,12 +78,12 @@ class AdminController extends Controller
     }
 
     public function userslist(){
-        $data = DB::table('users')->paginate(5);
+        $data = DB::table('users')->paginate(50);
         return view('admin/users',['pagedatas'=>$data]);
     }
 
      public function editUser($id){
-        $data = Users::find($id);
+        $data = User::find($id);
         return view('admin/edituser',['pagedata'=>$data]);
     }
 
@@ -89,29 +92,55 @@ class AdminController extends Controller
     }
 
     public function saveUsers(Request $req){
-        $page = new Users;
+        $user = new User;
         $req->validate([
-            'page_title' => 'required|max:255',
-            'pagecontent'=> 'required|unique:pages,title,',
+            //'page_title' => 'required|max:255|unique:pages,title,'.$req->id,
+            'name' => 'required|string,max:255',
+            'email' => 'required,string,email,max:255,unique:users,email,'.$req->id,
+            'phone' => 'required|max:10',
+            'password' => 'required,string,min:8',
+            'role' => 'required',
 
         ],
-         [
-                'page_title.required' => 'Page Title is required',
-                'pagecontent.required' => 'Content is required',
-                'page_title.unique' => 'Page title is already exists',
-        ]);
+        );
 
-        $page->title = $req->page_title;
-        $page->content = $req->pagecontent;
-        $page->user_by = auth()->user()->id;
-        $page->save();
+        $user->name = $req->name;
+        $user->email = $req->email;
+        $user->phone = $req->phone;
+        $user->role = $req->role;
+        $user->password = Hash::make($req->password);
+        $user->save();
 
-        return redirect()->back()->with('message', 'Page added successfully.');
+        return redirect()->back()->with('message', 'User added successfully.');
     }
 
      function deleteUser($id){
-        $data = users::find($id);
+        $data = user::find($id);
         $data->delete();
        return redirect('admin/users');
+    }
+
+      public function updateUser(Request $req){
+        $req->validate([
+            'name' => ['required', 'string', 'max:255'],
+           // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'max:10'],
+            'role' => ['required'],
+
+        ],
+        );
+
+        $user = User::find($req->id);
+        $user->name = $req->name;
+       // $user->email = $req->email;
+        $user->phone = $req->phone;
+        $user->role = $req->role;
+        $user->update();
+
+        return redirect()->back()->with('message', 'User updated successfully.');
+    }
+
+    public function dashboard(){
+        return view('admin/dashboard');
     }
 }
