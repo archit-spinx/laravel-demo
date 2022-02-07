@@ -37,3 +37,21 @@ Route::post('/add-product-category/{id}', [App\Http\Controllers\ProductControlle
 Route::get('/product-categories/remove/{id}', [App\Http\Controllers\ProductController::class, 'destroyCategory'])->name('remove.product.category');
 
 Route::get('/shop', [App\Http\Controllers\ProductAPIController::class, 'index'])->name('shop');
+
+
+
+
+Route::get('/admin/pages', [App\Http\Controllers\AdminController::class, 'pages'])->middleware(['admin']);
+Route::get('/admin/pages/add', [App\Http\Controllers\AdminController::class, 'addPages'])->middleware(['admin']);
+Route::post('/admin/pages/add', [App\Http\Controllers\AdminController::class, 'savePage'])->middleware(['admin']);
+Route::get('/admin/pages/edit/{id}', [App\Http\Controllers\AdminController::class, 'editPages'])->middleware(['admin']);
+Route::post('/admin/pages/edit/{id}', [App\Http\Controllers\AdminController::class, 'updatePage'])->middleware(['admin']);
+Route::get('/admin/pages/delete/{id}', [App\Http\Controllers\AdminController::class, 'deletePages'])->middleware(['admin']);
+Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'userslist'])->middleware(['admin']);
+
+Route::get('/admin/users/edit/{id}', [App\Http\Controllers\AdminController::class, 'editUser'])->middleware(['admin']);
+Route::post('/admin/users/edit/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->middleware(['admin']);
+
+Route::get('/admin/users/add', [App\Http\Controllers\AdminController::class, 'addUsers'])->middleware(['admin']);
+Route::post('/admin/users/add', [App\Http\Controllers\AdminController::class, 'saveUsers'])->middleware(['admin']);
+Route::get('/admin/users/delete/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->middleware(['admin']);
