@@ -35,6 +35,7 @@
 <option value="0" @if($pagedata->role == 0) selected @endif>Admin</option>
 <option value="1" @if($pagedata->role == 1) selected @endif>Subscriber</option>
 </select>
+
 </div>
 <div class="submit_form">
 <button type="submit" class="btn btn-primary">Save</button>
@@ -49,4 +50,3 @@
 </div>
 </div>
 @endsection
-

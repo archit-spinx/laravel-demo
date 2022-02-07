@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\models\Pages;
+
 use App\models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,6 @@ class AdminController extends Controller
         $req->validate([
             'page_title' => 'required|max:255|unique:pages,title,',
             'pagecontent'=> 'required',
-
         ],
          [
                 'page_title.required' => 'Page Title is required',
@@ -51,6 +51,7 @@ class AdminController extends Controller
     function updatePage(Request $req){
             
          $req->validate([
+
             'page_title' => 'required|max:255|unique:pages,title,'.$req->id,
             'pagecontent'=> 'required',
 

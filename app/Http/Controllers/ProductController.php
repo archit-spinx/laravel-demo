@@ -42,11 +42,6 @@ class ProductController extends Controller
         return $data;
     }
 
-    // function Result(Request $request) {
-    //     $data = Http::get('http://spinx.local/laravel-demo/public/api/search-product/'.$request->search);
-    //     return $data;
-    // }
-
     public function getProducts(Request $request)
     {
         // $productCollection = Product::paginate(6);
@@ -54,33 +49,33 @@ class ProductController extends Controller
         $categoryCollection = ProductCategory::all();
         $products = $this->External()->json();
 
-        if ($request->ajax()) {
-            if(!!$request->search){
-                $productCollection = Product::where('title','LIKE','%'.$request->search."%")->get();
-                // $product = $data = Http::get('http://spinx.local/laravel-demo/public/api/search-product/'.$request->search);
-                // $productside = json_decode(json_encode($productCollection), FALSE);
+        // if ($request->ajax()) {
+        //     if(!!$request->search){
+        //         $productCollection = Product::where('title','LIKE','%'.$request->search."%")->get();
+        //         // $product = $data = Http::get('http://spinx.local/laravel-demo/public/api/search-product/'.$request->search);
+        //         // $productside = json_decode(json_encode($productCollection), FALSE);
                 
-                $view = view('products-data',compact('$productCollection'))->render();
-            } elseif (!!$request->filter) {
-                $price = $request->price;
-                $category = $request->category;
-                if(!!$category){
-                    $productCollection = Product::query()->where('category_id','=',$category)->get();
-                }
-                if (!!$price) {
-                    if(!!$category){
-                        $productCollection = Product::query()->where('category_id','=',$category)->orderBy('price', $price)->get();
-                    } else {
-                        $productCollection = Product::query()->orderBy('price', $price)->get();
-                    }
-                } 
-                $view = view('products-data',compact('productCollection'))->render();
-            } else {
-                $view = view('products-data',compact('productCollection'))->render();
-            }
+        //         $view = view('products-data',compact('$productCollection'))->render();
+        //     } elseif (!!$request->filter) {
+        //         $price = $request->price;
+        //         $category = $request->category;
+        //         if(!!$category){
+        //             $productCollection = Product::query()->where('category_id','=',$category)->get();
+        //         }
+        //         if (!!$price) {
+        //             if(!!$category){
+        //                 $productCollection = Product::query()->where('category_id','=',$category)->orderBy('price', $price)->get();
+        //             } else {
+        //                 $productCollection = Product::query()->orderBy('price', $price)->get();
+        //             }
+        //         } 
+        //         $view = view('products-data',compact('productCollection'))->render();
+        //     } else {
+        //         $view = view('products-data',compact('productCollection'))->render();
+        //     }
 
-            return response()->json(['html'=>$view]);
-        }
+        //     return response()->json(['html'=>$view]);
+        // }
         return view('products',["productCollection" => $products])->with("categoryCollection",$categoryCollection);
     }
 
