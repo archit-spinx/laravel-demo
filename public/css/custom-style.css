@@ -1,0 +1,7 @@
+.pagination-custom svg{width: 30px}
+.pagination-custom nav div:first-child{display: none;}
+.pagination-custom{margin-top: 40px;}
+
+.page_header{text-align: center; padding: 10px 0;background-color: DarkSalmon; color: white; font-size: 24px; font-weight: bold;}
+footer p{margin-bottom: 0;}
+.page_content{padding: 40px 0;}

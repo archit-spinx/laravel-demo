@@ -27,6 +27,9 @@
 	</tr>
 @endforeach
 </table>
+<div class="d-flex justify-content-center pagination-custom">
+    {!! $pagedatas->links() !!}
+</div>
 </div>
 </div>
 </div>

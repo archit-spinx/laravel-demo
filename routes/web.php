@@ -60,3 +60,5 @@ Route::get('/admin/users/delete/{id}', [App\Http\Controllers\AdminController::cl
 Route::get('/admin/profile',[App\Http\Controllers\UserController::class, 'show'])->name('profile');
 Route::post('/admin/profile',[App\Http\Controllers\UserController::class, 'profileUpdate'])->name('profile');
 Route::get('/admin/products', [App\Http\Controllers\AdminProductController::class, 'getProducts'])->middleware(['admin']);
+
+Route::get('/{slug}',[App\Http\Controllers\HomeController::class, 'show']); 

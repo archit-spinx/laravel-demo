@@ -53,6 +53,13 @@
                            <input type="password" class="form-control" id ="password_confirmation" value="" name="password_confirmation">
                        </div>
                        <div class="form-group">
+                            <label for="profile_img"><strong>{{ __('Profile Image') }}</strong></label>
+                                <input id="profile_img" type="file" class="form-control" name="profile_img" autocomplete="profile">
+                         @if(Auth::user()->profile_img)
+                            <img class="img-profile" src="{{asset('/'.Auth::user()->profile_img)}}" alt="profile_image" style="width:280px; padding: 10px; margin: 0px; ">
+                        @endif
+                        </div>
+                       <div class="form-group">
                         <label for="submit"><strong></strong></label>
                         <button class="btn btn-primary form-control" type="submit">Update Profile</button>
                         </div>
