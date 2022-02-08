@@ -38,6 +38,14 @@ class UserController extends Controller
         } 
         
         $user =Auth::user();   
+
+    
+    if($request->hasFile('profile_img')){
+            $filename = $request->profile_img->getClientOriginalName();
+            $request->image->storeAs('profile_img',$filename,'public/uploads');
+            Auth()->user()->update(['profile_img'=>$filename]);
+        }
+        
         $user->name = $request['name'];
         $user->email = $request['email'];
         if(isset($request['password'])){

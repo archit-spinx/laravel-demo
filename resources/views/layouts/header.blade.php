@@ -15,7 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <link href="{{ asset('css/custom-style.css') }}" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
@@ -83,6 +83,16 @@
                                     </a>
                                 </div>
                             </li>-->
+                             <li class="nav-item ">
+                                <a id="navbarDropdown" class="nav-link " href="/about-us" >
+                                    {{ __('About Us') }}
+                                </a>
+                            </li>
+                             <li class="nav-item ">
+                                <a id="navbarDropdown" class="nav-link " href="/contact-us" >
+                                    {{ __('Contact Us') }}
+                                </a>
+                            </li>
                             <li class="nav-item ">
                                 <a id="navbarDropdown" class="nav-link " href="{{ route('products') }}" >
                                     {{ __('Products') }}

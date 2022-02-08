@@ -15,7 +15,7 @@ class AdminController extends Controller
 {
     //
     public function pages(){
-        $data = DB::table('pages')->paginate(5);
+        $data = DB::table('pages')->paginate(10);
         return view('admin/pages',['pagedatas'=>$data]);
     }
 
@@ -27,11 +27,13 @@ class AdminController extends Controller
         $page = new Pages;
         $req->validate([
             'page_title' => 'required|max:255|unique:pages,title,',
+            'slug'=>'required|unique:pages,slug',
             'pagecontent'=> 'required',
         ],
          [
                 'page_title.required' => 'Page Title is required',
                 'pagecontent.required' => 'Content is required',
+                'slug.required' => 'Slug is required',
                 'page_title.unique' => 'Page title is already exists',
         ]);
 
@@ -54,16 +56,19 @@ class AdminController extends Controller
 
             'page_title' => 'required|max:255|unique:pages,title,'.$req->id,
             'pagecontent'=> 'required',
+            'slug'=>'required|unique:pages,slug,'.$req->id,
 
         ],
          [
                 'page_title.required' => 'Page Title is required',
                 'pagecontent.required' => 'Content is required',
+                'slug.required' => 'Slug is required',
                 'page_title.unique' => 'Page title is already exists',
         ]);
 
         $data = Pages::find($req->id);
         $data->title = $req->page_title;
+        $data->slug = $req->slug;
         $data->content = $req->pagecontent;
         $data->user_by = auth()->user()->id;
         $data->update();
@@ -78,7 +83,7 @@ class AdminController extends Controller
     }
 
     public function userslist(){
-        $data = DB::table('users')->paginate(50);
+        $data = DB::table('users')->paginate(10);
         return view('admin/users',['pagedatas'=>$data]);
     }
 
@@ -95,10 +100,10 @@ class AdminController extends Controller
         $user = new User;
         $req->validate([
             //'page_title' => 'required|max:255|unique:pages,title,'.$req->id,
-            'name' => 'required|string,max:255',
-            'email' => 'required,string,email,max:255,unique:users,email,'.$req->id,
-            'phone' => 'required|max:10',
-            'password' => 'required,string,min:8',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,'.$req->id,
+            'phone' => 'required|string|max:10',
+            'password' => 'required|string|min:8',
             'role' => 'required',
 
         ],
