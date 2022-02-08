@@ -48,6 +48,12 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url('/') }}">
+
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Visit Site</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -56,6 +62,24 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('/admin/pages') }}">
                     <span>Pages</span>
+                </a>
+            </li>            
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('/admin/products') }}">
+                   <span> {{ __('Products') }}</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('add-product') }}">
+                   <span>{{ __('Add New Product') }}</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('product.categories') }}">
+                   <span> {{ __('Product Categories') }}</span>
                 </a>
             </li>
 
