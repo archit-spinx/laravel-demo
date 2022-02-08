@@ -38,7 +38,7 @@
 						</div>
 						<div class="form-group mb-2">
 							<label for="prod_name">Category</label>
-							<select class="form-select" name="category_id">
+							<select class="form-select form-control" name="category_id">
 								<option value=""></option>
 								@foreach($categoryCollection as $category)
 									<?php

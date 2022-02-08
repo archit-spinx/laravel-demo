@@ -3,52 +3,68 @@
 @section('content')
 <div class="container">
 	<div class="row">		
-		<div class="col-md-10">
+		<div class="col-md-12">
 			<div class="justify-content-center">
 		    	@if(session()->has('message'))
 					<div class="alert alert-success">
 					    {{ session()->get('message') }}
 					</div>
 				@endif
-		    	@if(count($productCollection['data']) > 0)
-		    		<div class="all-products row">
-				    	@foreach($productCollection['data'] as $product)
-				        <div class="col-md-4 products" style="margin-bottom: 80px;">
-				            <div class="card">
-				                <div class="card-header">
-				                	<label>{{ __($product['title']) }}</label>
+		    	@if(count($products['data']) > 0)
+		    		<div class="">
 
-				                	<div style="float: right;">
-				                		<a class="btn btn-primary" href="/product/{{$product['id']}}">View</a>
-				                		<a class="btn btn-primary" href="{{route('edit-product',$product['id'])}}">Edit</a>
-				                		<a class="btn btn-danger" onclick="return confirm('Are you sure, do you want delete this product?')" href="{{route('products').'/remove/'.$product['id']}}">Delete</a>
-				                	</div>
-				                </div>
-				                <div class="card-body row">
-				                	<div class="col-md-12 text-center">
-				                		<img src="{{ $product['image'] }}" width="250" height="250" class="rounded mx-auto d-block"/>
-				                	</div>
-				                	<div class="col-md-12">
-				                		@if($product['special_price'])
-				                			<del>
-				                		@endif
-					                	<label><b>Price:</b>  </label>$<span>{{ __($product['price']) }}</span><br>
-					                	@if($product['special_price'])
-				                			</del>
-				                			<label><b>Sale Price:</b> </label>$<span>{{ __($product['special_price']) }}</span>
-				                			<br>
-				                		@endif
-					                	<p><b>Description:</b>  {{ __($product['description']) }}</p>
-				                	</div>
-				                </div>
-				            </div>
-				        </div>
+					<div class="table_pages">
+						<table>
+						<tr>
+							<th style="width:5%"> ID</th>
+							<th style="width:15%">Title</th>
+							<th style="width:10%">Image</th>
+							<th style="width:10%">Price</th>
+							<th style="width:10%">Sale Price</th>
+							<th style="width:25%">Description</th>
+							<th style="width:5%">View</th>
+							<th style="width:5%">Edit</th>
+							<th style="width:5%">Delete</th>
+
+						</tr>
+				    	@foreach($products['data'] as $product)
+				        <tr>
+							<td >								
+								<label>{{ __($product['id']) }}</label>
+							</td>
+							<td >
+							
+								<label>{{ __($product['title']) }}</label>
+							</td>
+				                	
+							<td >
+								<div class="col-md-12 text-center">
+									<img src="{{ $product['image'] }}" width="50" height="50" class="rounded mx-auto d-block"/>
+								</div>
+							</td>	
+							<td>		
+								$<span>{{ __($product['price']) }}</span>								
+							</td>
+							<td>
+							@if($product['special_price'] > 0)
+								$<span>{{ __($product['special_price']) }}
+							@endif
+							</td>
+							<td ><p> {{ __($product['description']) }}</p></td>
+								
+							<td ><a class="btn btn-primary" href="/product/{{$product['id']}}">View</a></td>
+							<td ><a class="btn btn-primary" href="{{route('edit-product',$product['id'])}}">Edit</a></td>
+							<td ><a class="btn btn-danger" onclick="return confirm('Are you sure, do you want delete this product?')" href="{{route('products').'/remove/'.$product['id']}}">Delete</a></td>
+								
+						</tr>
 				        @endforeach
+						</table>
 						
-						@if(count($productCollection['meta']) > 0)						
+
+						@if(count($products['meta']) > 0)						
 						<div class="d-flex justify-content-center">
 							<ul class="list-inline">
-							@foreach($productCollection['meta']['links'] as $productpag)
+							@foreach($products['meta']['links'] as $productpag)
 								@php
 									$paelen = array();							
 									if($productpag['url']){
@@ -65,9 +81,7 @@
 						</div>
 						@endif					
 						
-				        <!-- <div class="ajax-load text-center" style="display:none">
-							<p>Loading More Products. . .</p>
-						</div> -->
+						</div>
 					</div>
 			    @else
 			    	<div class="col-md-12">
@@ -90,5 +104,9 @@
 		</div>
 	</div>
 </div>
-<!-- <input type="hidden" name="ajaxload" value="0" /> -->
+<style>
+	.table_pages table {
+  empty-cells: show;
+}
+</style>
 @endsection
