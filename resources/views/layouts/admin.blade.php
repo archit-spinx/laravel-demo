@@ -66,6 +66,12 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('/admin/profile') }}">
+                   <span>User Profile</span>
+                </a>
+            </li>
+
         </ul>
         <!-- End of Sidebar -->
 

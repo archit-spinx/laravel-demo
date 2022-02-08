@@ -57,5 +57,5 @@ Route::get('/admin/users/add', [App\Http\Controllers\AdminController::class, 'ad
 Route::post('/admin/users/add', [App\Http\Controllers\AdminController::class, 'saveUsers'])->middleware(['admin']);
 Route::get('/admin/users/delete/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->middleware(['admin']);
 
-Route::get('/profile',[App\Http\Controllers\UserController::class, 'show'])->name('profile');
-Route::post('/profile',[App\Http\Controllers\UserController::class, 'profileUpdate'])->name('profile');
+Route::get('/admin/profile',[App\Http\Controllers\UserController::class, 'show'])->name('profile');
+Route::post('/admin/profile',[App\Http\Controllers\UserController::class, 'profileUpdate'])->name('profile');
