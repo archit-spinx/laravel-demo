@@ -16,10 +16,10 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+<script src="{{ asset('js/jquery.min.js') }}"></script>
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/custom-style.css') }}" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -139,8 +139,8 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome &nbsp;
                                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ auth()->user()->name }}</span>
-                                    @if(Auth::user()->image)
-<img class="img-profile rounded-circle" src="{{asset('/storage/images/'.Auth::user()->image)}}" alt="profile_image" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
+                                    @if(Auth::user()->profile_img)
+<img class="img-profile rounded-circle" src="{{asset('/'.Auth::user()->profile_img)}}" alt="profile_image" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
 @endif
                             </a>
                             <!-- Dropdown - User Information -->
@@ -219,7 +219,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->

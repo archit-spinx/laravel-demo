@@ -13,6 +13,13 @@ class pages extends Model
     protected $fillable = [
         'page_title',
         'pagecontent',
+        'slug'
     ];
+
+    public function setTitleAttribute($value): void
+    {
+        $this->attributes['slug'] = \Illuminate\Support\Str::slug($value);
+        $this->attributes['title'] = $value;
+    }
 
 }

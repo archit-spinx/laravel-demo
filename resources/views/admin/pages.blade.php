@@ -13,7 +13,8 @@
 <tr>
 	<th style="width:5%">Page ID</th>
 	<th style="width:15%">Title</th>
-	<th style="width:45%">Content</th>
+	<th style="width:10%">Slug</th>
+	<th style="width:35%">Content</th>
 	<th style="width:10%">Admin</th>
 	<th style="width:25%">Action</th>
 
@@ -22,14 +23,19 @@
 <tr>
 		<td>{{$singlepages->id}}</td>
 		<td>{{$singlepages->title}}</td>
+		<td>{{$singlepages->slug}}</td>
 		<td>{{$singlepages->content}}</td>
 		<td>{{getUsername($singlepages->user_by)}}</td>
-		<td><a class="btn btn-primary mx-1" href="{{ url('/admin/pages/edit/') }}/{{$singlepages->id}}">Edit</a><a class="btn btn-primary" onclick="return confirm('Are you sure?')" href="{{ url('/admin/pages/delete/') }}/{{$singlepages->id}}">Delete</a></td>
+		<td><a class="btn btn-primary mx-1" href="{{ url('/') }}/{{$singlepages->slug}}">View</a>
+			<a class="btn btn-primary mx-1" href="{{ url('/admin/pages/edit/') }}/{{$singlepages->id}}">Edit</a><a class="btn btn-primary" onclick="return confirm('Are you sure?')" href="{{ url('/admin/pages/delete/') }}/{{$singlepages->id}}">Delete</a></td>
 
 
 	</tr>
 @endforeach
 </table>
+<div class="d-flex justify-content-center pagination-custom">
+    {!! $pagedatas->links() !!}
+</div>
 </div>
 
 </div>

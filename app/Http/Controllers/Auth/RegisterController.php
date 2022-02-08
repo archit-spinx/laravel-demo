@@ -67,19 +67,23 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        
-        $file_extention = $data['profile_img']->getClientOriginalExtension();
-        $file_name = time().rand(99,999).'image_profile.'.$file_extention;
-        $file_path = $data['profile_img']->move(public_path().'/users/image',$file_name);
-
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
             'role' => 1,
             'password' => Hash::make($data['password']),
-            'profile_img' => $file_path
+            'profile_img' =>  $profile_image_url
         ]);
+
+         $request = request();
+
+     $profileImage = $request->file('profile_img');
+     $profileImageSaveAsName = time() . "-profile." . $profileImage->getClientOriginalExtension();
+
+     $upload_path = 'uploads/';
+     $profile_image_url = $upload_path . $profileImageSaveAsName;
+     $success = $profileImage->move($upload_path, $profileImageSaveAsName);
 
         return $user;
     }
