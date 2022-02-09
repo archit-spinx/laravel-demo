@@ -179,6 +179,7 @@ $(document).ready(function () {
         filterForm();
     });
 
+    /*
     $(".product-delete").on("click",function(e){
         e.preventDefault();
         var parent = $(this).parents('.products');
@@ -251,6 +252,7 @@ $(document).ready(function () {
             console.log('Product Couldn\'t be Updated!!')
         });
     });
+    */
     $(".back-product").on("click",function(e){
         window.location.href = '/products';
     });

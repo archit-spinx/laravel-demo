@@ -29,7 +29,8 @@
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+            
+            
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/admin') }}">
                 <div class="sidebar-brand-icon rotate-n-15">
@@ -42,7 +43,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <!-- <li class="nav-item active">
                 <a class="nav-link" href="{{ url('/admin') }}">
 
                     <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -53,7 +54,7 @@
 
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Visit Site</span></a>
-            </li>
+            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -160,6 +161,9 @@
                             </div>
                         </li>
 
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url('/') }}"><i class="fas fa-fw fa-tachometer-alt"></i><span>Visit Site</span></a>
+                        </li>
                     </ul>
 
                 </nav>
