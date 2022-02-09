@@ -1,4 +1,7 @@
-@extends('layouts.admin')
+@php 
+	$role = Auth::user()->role;
+@endphp
+@extends(($role ==0) ? 'layouts.admin': 'layouts.app')
 
 @section('content')
 <div class="container">
