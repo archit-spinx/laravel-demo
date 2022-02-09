@@ -5,7 +5,7 @@
 <div class="row">
 <div class="col-lg-12">
 <div class="add_new_btn mb-4">
-<a class="btn btn-primary" href="/admin/users/add">Add New Users</a>
+<a class="btn btn-primary" href="{{ url('/admin/users/add') }}">Add New Users</a>
 </div>
 <div class="table_pages">
 <table>
@@ -22,7 +22,7 @@
 		<td>{{$singlepages->phone}}</td>
 		<td>{{$singlepages->email}}</td>
 		<td>{{getRole($singlepages->role)}}</td>
-		<td><a class="btn btn-primary mx-1" href="/admin/users/edit/{{$singlepages->id}}">Edit</a><a class="btn btn-primary" onclick="return confirm('Are you sure?')" href="/admin/users/delete/{{$singlepages->id}}">Delete</a></td>
+		<td><a class="btn btn-primary mx-1" href="{{ url('/admin/users/edit') }}/{{$singlepages->id}}">Edit</a><a class="btn btn-primary" onclick="return confirm('Are you sure?')" href="{{ url('/admin/users/delete') }}/{{$singlepages->id}}">Delete</a></td>
 
 	</tr>
 @endforeach
