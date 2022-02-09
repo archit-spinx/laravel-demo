@@ -38,7 +38,7 @@
                    <p>{{$message}}</p>
                       </div>
                    @endif
-                    <form action="{{route('profile')}}" method="POST">
+                    <form action="{{route('profile')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                        <div class="form-group">
                            <label for="name"><strong>Name:</strong></label>
@@ -47,6 +47,10 @@
                         <div class="form-group">
                            <label for="email"><strong>Email:</strong></label>
                            <input type="text" class="form-control" id ="email" value="{{Auth::user()->email}}" name="email">
+                       </div>  
+                        <div class="form-group">
+                           <label for="phone"><strong>Phone:</strong></label>
+                           <input type="text" class="form-control" id ="phone" value="{{Auth::user()->phone}}" name="phone">
                        </div>                       
                        <div class="form-group">
                            <label for="email"><strong>Password:</strong></label>                           

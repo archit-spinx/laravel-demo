@@ -41,7 +41,7 @@
 						</div>
 						<div class="form-group mb-2">
 						    <label for="cat_desc">Description</label>
-						    <textarea class="form-control" id="cat_desc" rows="4" name="category_description" value="{{ (isset($category)) ? $category->category_description : old('category_description') }}">{{ (isset($category)) ? $category->description : old('category_description') }}</textarea>
+						    <textarea class="form-control" id="cat_desc" rows="4" name="category_description" value="{{ (isset($category)) ? $category->category_description : old('category_description') }}">{{ (isset($category)) ? $category->category_description : old('category_description') }}</textarea>
 						</div>
 						<button type="submit" class="btn btn-primary">{{ (isset($category)) ? 'Update Category' : 'Add Category' }}</button>
                 	</form>
