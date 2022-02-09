@@ -68,12 +68,12 @@
                         @else
                             
                              <li class="nav-item ">
-                                <a id="navbarDropdown" class="nav-link " href="/about-us" >
+                                <a id="navbarDropdown" class="nav-link " href="{{ url('/about-us') }}/" >
                                     {{ __('About Us') }}
                                 </a>
                             </li>
                              <li class="nav-item ">
-                                <a id="navbarDropdown" class="nav-link " href="/contact-us" >
+                                <a id="navbarDropdown" class="nav-link " href="{{ url('/contact-us') }}/" >
                                     {{ __('Contact Us') }}
                                 </a>
                             </li>
