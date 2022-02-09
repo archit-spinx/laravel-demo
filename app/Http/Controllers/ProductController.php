@@ -79,6 +79,14 @@ class ProductController extends Controller
         return view('products',["productCollection" => $products])->with("categoryCollection",$categoryCollection);
     }
 
+    public function getProductsCounter(Request $request)
+    {
+        // $categoryCollection = ProductCategory::all();
+        $products = Http::get(env("API_URL").'/api/all-products'); 
+        
+        return view('home',["productCounter" => count($products['data'])]);
+    }
+
     public function getProductCategories(Request $request)
     {
         $categoryCollection =  ProductCategory::all();

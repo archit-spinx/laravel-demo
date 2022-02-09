@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -17,7 +17,10 @@
                     @guest
                         {{ __('Please Login or Register for access this website.') }}
                     @else
-                        {{ __('Welcome,'.Auth::user()->name) }}
+                        <div class="view-product">
+                            <span>We have {{ $productCounter }} Products.</span>
+                            <a class="btn btn-primary" href="{{  route('products') }}">View All Products</a>
+                        </div>
                     @endguest
                 </div>
             </div>
