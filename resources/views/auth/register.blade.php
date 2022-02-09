@@ -80,7 +80,7 @@
                             <label for="profile_img" class="col-md-4 col-form-label text-md-end">{{ __('Profile Image') }}</label>
 
                             <div class="col-md-6">
-                                <input id="profile_img" type="file" class="form-control" name="profile_img" required autocomplete="profile">
+                                <input id="profile_img" type="file" class="form-control" name="profile_img" autocomplete="profile">
                             </div>
                         </div>
                         <div class="row mb-0">
