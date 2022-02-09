@@ -104,6 +104,7 @@ class ProductController extends Controller
             'title'=>'required|unique:products,title',  
             'category_id' => 'required',
             'price'=>'required|gt:0|numeric',
+            'special_price' => 'nullable|numeric',
             'description'=>'required',            
         ]);
 		
@@ -190,7 +191,8 @@ class ProductController extends Controller
         $request->validate([  
             'title'=>'required',  
             'category_id' => 'required',
-            'price'=>'required|gt:0|numeric',             
+            'price'=>'required|gt:0|numeric',
+            'special_price' => 'nullable|numeric',             
             'description'=>'required',            
         ]);
 

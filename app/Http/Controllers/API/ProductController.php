@@ -38,7 +38,7 @@ class ProductController extends BaseController
         $validator = Validator::make($input, [
             'title'=>'required',  
             'price'=>'required|gt:0|numeric',  
-            'special_price' => 'lt:price|numeric',
+            'special_price' => 'nullable|numeric',
             'description'=>'required',
             'category_id' => 'numeric',
         ]);
@@ -92,7 +92,7 @@ class ProductController extends BaseController
         $validator = Validator::make($input, [
             'title'=>'required',  
             'price'=>'required|gt:0|numeric',  
-            'special_price' => 'lt:price|numeric',
+            'special_price' => 'nullable|numeric',
             'description'=>'required',
             'category_id' => 'numeric',
         ]);
