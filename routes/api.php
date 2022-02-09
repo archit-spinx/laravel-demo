@@ -35,4 +35,3 @@ Route::post('product/update/{id}', 'App\Http\Controllers\API\ProductController@u
 Route::delete('product/delete/{id}', 'App\Http\Controllers\API\ProductController@destroy');
 
 Route::get('/filter', [ProductController::class, 'filterPrice']);
-Route::get('/search-product/{name?}', [ProductController::class, 'searchName']); 
