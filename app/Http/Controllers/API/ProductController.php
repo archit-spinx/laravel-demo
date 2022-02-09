@@ -24,6 +24,7 @@ class ProductController extends BaseController
     
         return $this->sendResponse(ProductResource::collection($products), 'Products retrieved successfully.');
     }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -139,19 +140,30 @@ class ProductController extends BaseController
     public function filterPrice(Request $request) {
 
         $price = $request->price;
+        $name = $request->search;
         $category = $request->category;
-        if($category){
-            $productCollection = Product::query()->where('category_id','=',$category)->get();
+
+        if ($category && $name && $price) {
+            $productCollection = Product::query()->where('category_id','=',$category)->where('title', 'LIKE', "%$name%")->orderBy('price', $price)->paginate(6);
             return view('products-data',["productCollection" => $productCollection]);
-        }
-        if ($price) {
-            if($category){
-                $productCollection = Product::query()->where('category_id','=',$category)->orderBy('price', $price)->get();
-                return view('products-data',["productCollection" => $productCollection]);
-            } else {
-                $productCollection = Product::query()->orderBy('price', $price)->get();
-                return view('products-data',["productCollection" => $productCollection]);
-            }
+        } elseif ($category && $name && is_null($price)) {
+            $productCollection = Product::query()->where('category_id','=',$category)->where('title', 'LIKE', "%$name%")->paginate(6);
+            return view('products-data',["productCollection" => $productCollection]);
+        } elseif ($name && $price && is_null($category)) {
+            $productCollection = Product::query()->where('title', 'LIKE', "%$name%")->orderBy('price', $price)->paginate(6);
+            return view('products-data',["productCollection" => $productCollection]);
+        } elseif ($category && $price && is_null($name)) {
+            $productCollection = Product::query()->where('category_id','=',$category)->orderBy('price', $price)->paginate(6);
+            return view('products-data',["productCollection" => $productCollection]);
+        } elseif ($category && is_null($price) && is_null($name)) {
+            $productCollection = Product::query()->where('category_id','=',$category)->paginate(6);
+            return view('products-data',["productCollection" => $productCollection]);
+        } elseif ($name && is_null($price) && is_null($category)) {
+            $productCollection = Product::query()->where('title', 'LIKE', "%$name%")->paginate(6);
+            return view('products-data',["productCollection" => $productCollection]);
+        } elseif ($price && is_null($name) && is_null($category)) {
+            $productCollection = Product::query()->orderBy('price', $price)->paginate(6);
+            return view('products-data',["productCollection" => $productCollection]);
         } else {
             $productCollection = Product::all();
             return view('products-data',["productCollection" => $productCollection]);

@@ -53,16 +53,37 @@ function filterForm(){
         if(data == ""){
             $('.ajax-load').html("No Products found");
             return;
+        }else {
+            $('.ajax-load').hide();
+            $(".all-products").html(data);
+            var productCount = $('#totalcount').val();
+            if (typeof productCount != 'undefined' && productCount != 'na' && productCount != '') {
+                if (productCount <= '6') {
+                    $('#hidden_page').val('1');    
+                }
+                if (productCount == '0') {
+                    $('.all-products').html("No Product found");
+                }
+            }
         }
-        $('.ajax-load').hide();
-        $(".all-products").html(data);
-        page = 0;
+        // page = 0;
     })
     .fail(function(jqXHR, ajaxOptions, thrownError)
     {
           alert('server not responding...');
     });
 }
+
+$(document).ajaxComplete(function () {
+    $("#pagination a").on("click",function(e){
+        e.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        $('#hidden_page').val(page);
+        $('li').removeClass('active');
+        $(this).parent().addClass('active');
+        filterForm();
+    });
+});
 
 var imagebase64 = "";  
 function encodeImageFileAsURL(element){
@@ -105,7 +126,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#side-search').on('keyup',function(){
+    $('#side-search').on('keyup',function(e){
         var time_out_id=0;
         var min_length=3;
         var value = $(this).val();
@@ -114,57 +135,10 @@ $(document).ready(function () {
             if(time_out_id != 0) clearTimeout(time_out_id);
 
                 time_out_id = setTimeout(function(){
-                    $.ajax(
-                    {
-                        url: 'http://spinx.local/laravel-demo/public/api/search-product/' + value,
-                        type: "get",
-                        beforeSend: function()
-                        {
-                            $('.ajax-load').show();
-                        }
-                    })
-                    .done(function(data)
-                    {
-                        if(data == ""){
-                            $('.ajax-load').html("No Products found");
-                            return;
-                        }
-                        $('.ajax-load').hide();
-                        $(".all-products").html(data);
-                        console.log(data);
-                        page = 0;
-                    })
-                    .fail(function(jqXHR, ajaxOptions, thrownError)
-                    {
-                        alert('server not responding...');
-                    });
+                    e.preventDefault();
+                    filterForm();
                 }, 250);
             }
-        } else {
-            $.ajax(
-                {
-                    url: 'http://spinx.local/laravel-demo/public/api/search-product',
-                    type: "get",
-                    beforeSend: function()
-                    {
-                        $('.ajax-load').show();
-                    }
-                })
-                .done(function(data)
-                {
-                    if(data == ""){
-                        $('.ajax-load').html("No Products found");
-                        return;
-                    }
-                    $('.ajax-load').hide();
-                    $(".all-products").html(data);
-                    console.log("above search " + data);
-                    page = 0;
-                })
-                .fail(function(jqXHR, ajaxOptions, thrownError)
-                {
-                      alert('server not responding...');
-                });
         }
 
     });
@@ -179,6 +153,7 @@ $(document).ready(function () {
         filterForm();
     });
 
+    /*
     $(".product-delete").on("click",function(e){
         e.preventDefault();
         var parent = $(this).parents('.products');
@@ -251,6 +226,7 @@ $(document).ready(function () {
             console.log('Product Couldn\'t be Updated!!')
         });
     });
+    */
     $(".back-product").on("click",function(e){
         window.location.href = '/products';
     });

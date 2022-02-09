@@ -13,13 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [App\Http\Controllers\ProductController::class, 'getProductsCounter'])->name('home');
 
 Auth::routes();
 
-Route::view('/home', 'home');
+Route::get('/home', [App\Http\Controllers\ProductController::class, 'getProductsCounter'])->name('home');
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'getProducts'])->name('products');
 Route::get('/add-product', [App\Http\Controllers\ProductController::class, 'getProductCategories'])->name('add-product');
 Route::post('/add-product', [App\Http\Controllers\ProductController::class, 'create'])->name('add-product');
@@ -57,8 +55,14 @@ Route::get('/admin/users/add', [App\Http\Controllers\AdminController::class, 'ad
 Route::post('/admin/users/add', [App\Http\Controllers\AdminController::class, 'saveUsers'])->middleware(['admin','auth']);
 Route::get('/admin/users/delete/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->middleware(['admin','auth']);
 
+
 Route::get('/admin/profile',[App\Http\Controllers\UserController::class, 'show'])->name('profile')->middleware(['admin','auth']);;
 Route::post('/admin/profile',[App\Http\Controllers\UserController::class, 'profileUpdate'])->name('profile')->middleware(['admin','auth']);;
 Route::get('/admin/products', [App\Http\Controllers\AdminProductController::class, 'getProducts'])->middleware(['admin','auth']);
+
+Route::get('/admin/profile',[App\Http\Controllers\UserController::class, 'show'])->name('profile');
+Route::post('/admin/profile',[App\Http\Controllers\UserController::class, 'profileUpdate'])->name('profile');
+Route::get('/admin/products', [App\Http\Controllers\AdminProductController::class, 'getProducts'])->middleware(['admin'])->name('adminproducts.getProducts');
+
 
 Route::get('/{slug}',[App\Http\Controllers\HomeController::class, 'show']); 

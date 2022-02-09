@@ -4,12 +4,12 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-2">
-			<div class="form-group mb-4">
-				<label>{{ __('Search: ') }}</label>
-				<input type="text" class="form-controller" id="side-search" name="search" placeholder="Search Products. . ."></input>
-				<p style="font-size: 12px;">Minimum 3 characters required</p>
-			</div>
 			<form name="filter">
+				<div class="form-group mb-4">
+					<label>{{ __('Search: ') }}</label>
+					<input type="text" class="form-controller" id="side-search" name="search" placeholder="Search Products. . ."></input>
+					<p style="font-size: 12px;">Minimum 3 characters required</p>
+				</div>
 				<div class="form-group mb-4">
 					<label>{{ __('Filter By Price: ') }}</label>
 					<select class="form-select" name="price" data-value="price">
@@ -29,6 +29,7 @@
 						@endif
 					</select>
 				</div>
+				<input type="hidden" name="page" id="hidden_page" value="1" />
 			</form>
 		</div>
 		<div class="col-md-10">

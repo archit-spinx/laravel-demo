@@ -66,23 +66,7 @@
                                 </li>
                             @endif
                         @else
-                            <!--<li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ __('Products') }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('products') }}">
-                                        {{ __('All Products') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('add-product') }}">
-                                        {{ __('Add New Product') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('product.categories') }}">
-                                        {{ __('All Product Categories') }}
-                                    </a>
-                                </div>
-                            </li>-->
+                            
                              <li class="nav-item ">
                                 <a id="navbarDropdown" class="nav-link " href="/about-us" >
                                     {{ __('About Us') }}
@@ -93,16 +77,38 @@
                                     {{ __('Contact Us') }}
                                 </a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('Products') }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('products') }}">
+                                        {{ __('Products') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('add-product') }}">
+                                        {{ __('Add Product') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('product.categories') }}">
+                                        {{ __('Product Categories') }}
+                                    </a>
+                                </div>
+                            </li>
+                            <!-- <li class="nav-item ">
                                 <a id="navbarDropdown" class="nav-link " href="{{ route('products') }}" >
                                     {{ __('Products') }}
                                 </a>
-                            </li>
+                            </li> -->
+                            @php 
+                            $role = Auth::user()->role;
+                            @endphp
+                            @if($role == 0)
                             <li class="nav-item ">
-                                <a id="navbarDropdown" class="nav-link " href="{{ url('admin') }}" >
+                                <a id="navbarDropdown" class="nav-link " href="{{ url('admin/pages') }}" >
                                     {{ __('Dashboard') }}
                                 </a>
-                            </li>     
+                            </li>
+                            @endif     
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
