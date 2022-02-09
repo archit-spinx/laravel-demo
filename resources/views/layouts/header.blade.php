@@ -15,7 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <link href="{{ asset('css/custom-style.css') }}" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
@@ -66,7 +66,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            <!--<li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ __('Products') }}
                                 </a>
@@ -82,13 +82,36 @@
                                         {{ __('All Product Categories') }}
                                     </a>
                                 </div>
+                            </li>-->
+                             <li class="nav-item ">
+                                <a id="navbarDropdown" class="nav-link " href="/about-us" >
+                                    {{ __('About Us') }}
+                                </a>
                             </li>
+                             <li class="nav-item ">
+                                <a id="navbarDropdown" class="nav-link " href="/contact-us" >
+                                    {{ __('Contact Us') }}
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a id="navbarDropdown" class="nav-link " href="{{ route('products') }}" >
+                                    {{ __('Products') }}
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a id="navbarDropdown" class="nav-link " href="{{ url('admin') }}" >
+                                    {{ __('Dashboard') }}
+                                </a>
+                            </li>     
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                     <a class="dropdown-item" href="{{ url('/admin/profile') }}">
+                                        {{ __('Profile') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

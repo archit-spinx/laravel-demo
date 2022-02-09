@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class pages extends Model
 {
     use HasFactory;
+
+
+    protected $fillable = [
+        'page_title',
+        'pagecontent',
+        'slug'
+    ];
+
+    public function setTitleAttribute($value): void
+    {
+        $this->attributes['slug'] = \Illuminate\Support\Str::slug($value);
+        $this->attributes['title'] = $value;
+    }
+
 }

@@ -1,0 +1,72 @@
+@extends('layouts.admin')
+
+@section('content')
+<div class="container">
+  @if ($errors->any())
+  <div class="alert alert-danger">
+    <ul>
+      @foreach($errors->all() as $error)
+      <li>
+        {{$error}}
+      </li>
+      @endforeach
+    </ul>
+   </div>
+  @endif
+  @if(session()->get('message'))
+  <div class="alert alert-success" role="alert">
+    <strong>Success: </strong>{{session()->get('message')}}
+  </div>
+  @endif
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{Auth::user()->name}}'s Profile</div>
+                
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    @if($message = Session::get('success'))
+                      <div class="alert alert-success">
+                   <p>{{$message}}</p>
+                      </div>
+                   @endif
+                    <form action="{{route('profile')}}" method="POST">
+                    @csrf
+                       <div class="form-group">
+                           <label for="name"><strong>Name:</strong></label>
+                           <input type="text" class="form-control" id ="name" name="name" value="{{Auth::user()->name}}">
+                       </div>
+                        <div class="form-group">
+                           <label for="email"><strong>Email:</strong></label>
+                           <input type="text" class="form-control" id ="email" value="{{Auth::user()->email}}" name="email">
+                       </div>                       
+                       <div class="form-group">
+                           <label for="email"><strong>Password:</strong></label>                           
+                           <input type="password" class="form-control" id ="password"value=""  name="password">
+                       </div>
+                       <div class="form-group">
+                           <label for="email"><strong>Confirm Password:</strong></label>                           
+                           <input type="password" class="form-control" id ="password_confirmation" value="" name="password_confirmation">
+                       </div>
+                       <div class="form-group">
+                            <label for="profile_img"><strong>{{ __('Profile Image') }}</strong></label>
+                                <input id="profile_img" type="file" class="form-control" name="profile_img" autocomplete="profile">
+                         @if(Auth::user()->profile_img)
+                            <img class="img-profile" src="{{asset('/'.Auth::user()->profile_img)}}" alt="profile_image" style="width:280px; padding: 10px; margin: 0px; ">
+                        @endif
+                        </div>
+                       <div class="form-group">
+                        <label for="submit"><strong></strong></label>
+                        <button class="btn btn-primary form-control" type="submit">Update Profile</button>
+                        </div>
+                   </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
