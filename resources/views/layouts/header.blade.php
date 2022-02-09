@@ -99,11 +99,16 @@
                                     {{ __('Products') }}
                                 </a>
                             </li> -->
+                            @php 
+                            $role = Auth::user()->role;
+                            @endphp
+                            @if($role == 0)
                             <li class="nav-item ">
-                                <a id="navbarDropdown" class="nav-link " href="{{ url('admin') }}" >
+                                <a id="navbarDropdown" class="nav-link " href="{{ url('admin/pages') }}" >
                                     {{ __('Dashboard') }}
                                 </a>
-                            </li>     
+                            </li>
+                            @endif     
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
