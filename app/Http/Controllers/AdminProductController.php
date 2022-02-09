@@ -44,10 +44,9 @@ class AdminProductController extends Controller
         }else{
             $page = '';
         }
-        $data = Http::get(env("API_URL").'/api/products'.$page);         
-        $categoryCollection = ProductCategory::all();
+        $data = Http::get(env("API_URL").'/api/products'.$page);    
         $products = $data->json();
-        return view('admin.adminproducts',["productCollection" => $products])->with("categoryCollection",$categoryCollection);
+        return view('admin.adminproducts',compact(['products']));
     }
 
     
