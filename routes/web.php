@@ -40,13 +40,13 @@ Route::get('/shop', [App\Http\Controllers\ProductAPIController::class, 'index'])
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'dashboard'])->middleware(['admin','auth']);
 
 
-Route::get('/admin/pages', [App\Http\Controllers\AdminController::class, 'pages'])->middleware(['admin','auth']);
+Route::get('/admin/pages', [App\Http\Controllers\AdminController::class, 'pages'])->middleware(['admin','auth'])->name('pages');
 Route::get('/admin/pages/add', [App\Http\Controllers\AdminController::class, 'addPages'])->middleware(['admin','auth']);
 Route::post('/admin/pages/add', [App\Http\Controllers\AdminController::class, 'savePage'])->middleware(['admin','auth']);
 Route::get('/admin/pages/edit/{id}', [App\Http\Controllers\AdminController::class, 'editPages'])->middleware(['admin','auth']);
 Route::post('/admin/pages/edit/{id}', [App\Http\Controllers\AdminController::class, 'updatePage'])->middleware(['admin','auth']);
 Route::get('/admin/pages/delete/{id}', [App\Http\Controllers\AdminController::class, 'deletePages'])->middleware(['admin','auth']);
-Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'userslist'])->middleware(['admin','auth']);
+Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'userslist'])->middleware(['admin','auth'])->name('users');
 
 Route::get('/admin/users/edit/{id}', [App\Http\Controllers\AdminController::class, 'editUser'])->middleware(['admin','auth']);
 Route::post('/admin/users/edit/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->middleware(['admin','auth']);
