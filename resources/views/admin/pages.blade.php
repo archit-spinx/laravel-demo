@@ -25,7 +25,7 @@
 		<td>{{$singlepages->title}}</td>
 		<td>{{$singlepages->slug}}</td>
 		<td>{{$singlepages->content}}</td>
-		<td>{{getUsername($singlepages->user_by)}}</td>
+		<td>{{ getUsername($singlepages->user_by) }}</td>
 		<td><a class="btn btn-primary mx-1" href="{{ url('/') }}/{{$singlepages->slug}}">View</a>
 			<a class="btn btn-primary mx-1" href="{{ url('/admin/pages/edit/') }}/{{$singlepages->id}}">Edit</a><a class="btn btn-primary" onclick="return confirm('Are you sure?')" href="{{ url('/admin/pages/delete/') }}/{{$singlepages->id}}">Delete</a></td>
 
