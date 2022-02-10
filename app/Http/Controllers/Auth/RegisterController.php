@@ -80,7 +80,7 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'phone' => $data['phone'],
+            'phone' => isset($data['phone'])?$data['phone']:'',
             'role' => 1,
             'password' => Hash::make($data['password']),
             'profile_img' =>  $profile_image_url
