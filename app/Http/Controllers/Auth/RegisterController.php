@@ -68,18 +68,19 @@ class RegisterController extends Controller
     {
 
           $request = request();
-
+	 $profile_image_url = '';	
      $profileImage = $request->file('profile_img');
-     $profileImageSaveAsName = time() . "-profile." . $profileImage->getClientOriginalExtension();
+     if($profileImage){
+	 $profileImageSaveAsName = time() . "-profile." . $profileImage->getClientOriginalExtension();
 
      $upload_path = 'uploads/';
      $profile_image_url = $upload_path . $profileImageSaveAsName;
      $success = $profileImage->move($upload_path, $profileImageSaveAsName);
-
+	 }
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'phone' => $data['phone'],
+            'phone' => isset($data['phone'])?$data['phone']:'',
             'role' => 1,
             'password' => Hash::make($data['password']),
             'profile_img' =>  $profile_image_url

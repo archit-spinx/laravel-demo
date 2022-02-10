@@ -28,7 +28,7 @@ class UserController extends Controller
             $request->validate([
                 'name' =>'required|min:4|string|max:255',
                 'email'=>'required|email|string|max:255|unique:users,email,'.$user->id,
-                'phone' => 'nullable|max:10',
+                'phone' => 'required|max:10',
                 'password' => 'required|min:6|confirmed'
             ]); 
         }else{
@@ -62,7 +62,7 @@ if($request->hasFile('profile_img')){
         $user->name = $request['name'];
         $user->email = $request['email'];
         $user->phone = $request['phone'];
-        if(isset($request['password'])){
+        if(isset($request['password']) && $request['password'] !=''){
         $user->password = bcrypt($request['password']);
         }
         $user->save();

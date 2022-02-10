@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\models\Pages;
+use App\Models\Pages;
 
 use App\models\User;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +42,7 @@ class AdminController extends Controller
         $page->user_by = auth()->user()->id;
         $page->save();
 
-        return redirect()->back()->with('message', 'Page added successfully.');
+        return redirect(route('pages'))->with('message', 'Page added successfully.');
     }
 
     public function editPages($id){
@@ -73,13 +73,14 @@ class AdminController extends Controller
         $data->user_by = auth()->user()->id;
         $data->update();
 
-        return redirect()->back()->with('message', 'Page updated successfully.');
+        return redirect(route('pages'))->with('message', 'Page updated successfully.');
     }
 
     function deletePages($id){
         $data = Pages::find($id);
         $data->delete();
-      // return redirect('admin/pages');
+
+       return redirect(route('pages'))->with('message', 'Page deleted successfully.');
     }
 
     public function userslist(){
@@ -116,13 +117,14 @@ class AdminController extends Controller
         $user->password = Hash::make($req->password);
         $user->save();
 
-        return redirect()->back()->with('message', 'User added successfully.');
+        return redirect(route('users'))->with('message', 'User added successfully.');
     }
 
      function deleteUser($id){
         $data = user::find($id);
         $data->delete();
-      // return redirect('admin/users');
+
+       return redirect(route('users'))->with('message', 'User deleted successfully.');
     }
 
       public function updateUser(Request $req){
@@ -142,7 +144,7 @@ class AdminController extends Controller
         $user->role = $req->role;
         $user->update();
 
-        return redirect()->back()->with('message', 'User updated successfully.');
+        return redirect(route('users'))->with('message', 'User updated successfully.');
     }
 
     public function dashboard(){

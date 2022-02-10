@@ -4,6 +4,11 @@
 <div class="container py-4">
 <div class="row">
 <div class="col-lg-12">
+@if(session()->has('message'))
+	<div class="alert alert-success">
+		{{ session()->get('message') }}
+	</div>
+@endif
 <div class="add_new_btn mb-4">
 <a class="btn btn-primary" href="{{ url('/admin/users/add') }}">Add New Users</a>
 </div>

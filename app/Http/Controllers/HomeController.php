@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\models\Pages;
+use App\Models\Pages;
 
 class HomeController extends Controller
 {
@@ -30,7 +30,8 @@ class HomeController extends Controller
 
        public function show($slug)
     {
-       $page = pages::whereSlug($slug)->first();
-        return view('pages/index',['pagedata'=>$page]);
+		
+       $page = Pages::where('slug', $slug)->first();	  
+       return view('pages/index',['pagedata'=>$page]);
     }
 }
