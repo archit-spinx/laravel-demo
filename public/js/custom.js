@@ -40,8 +40,8 @@ function loadMoreData(page){
 function filterForm(){
     $.ajax(
     {
-        url: 'http://spinx.local/laravel-demo/public/api/filter',
-        type: "get",
+        url: '/search-products',
+        type: "post",
         data: $("form[name='filter']").serialize(),
         beforeSend: function()
         {
@@ -138,6 +138,11 @@ $(document).ready(function () {
                     e.preventDefault();
                     filterForm();
                 }, 250);
+            }
+        } else {
+            if (value == '') {
+                e.preventDefault();
+                filterForm();
             }
         }
 
