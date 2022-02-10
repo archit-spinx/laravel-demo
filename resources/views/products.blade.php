@@ -5,6 +5,7 @@
 	<div class="row">
 		<div class="col-md-2">
 			<form name="filter">
+				@csrf
 				<div class="form-group mb-4">
 					<label>{{ __('Search: ') }}</label>
 					<input type="text" class="form-controller" id="side-search" name="search" placeholder="Search Products. . ."></input>
@@ -39,9 +40,10 @@
 					    {{ session()->get('message') }}
 					</div>
 				@endif
-		    	@if(count($productCollection['data']) > 0)
+			</div>
+		    	@if(count($productCollection) > 0)
 		    		<div class="all-products row">
-				    	@foreach($productCollection['data'] as $product)
+				    	@foreach($productCollection as $product)
 				        <div class="col-md-4 products" style="margin-bottom: 80px;">
 				            <div class="card">
 				                <div class="card-header">
@@ -74,7 +76,11 @@
 				        </div>
 				        @endforeach
 						
-						@if(count($productCollection['meta']) > 0)						
+						<div id="pagination-products" class="pagination-section">
+							<input type="hidden" id="totalcount" name="totalcount" value="{{$productCollection->total()}}">
+							<span class="pull-right">{{$productCollection->links()}}</span>
+						</div>
+						{{-- @if(count($productCollection['meta']) > 0)				
 						<div class="d-flex justify-content-center">
 							<ul class="list-inline">
 							@foreach($productCollection['meta']['links'] as $productpag)
@@ -92,7 +98,7 @@
 							@endforeach
 							</ul>	
 						</div>
-						@endif					
+						@endif					 --}}
 						
 				        <!-- <div class="ajax-load text-center" style="display:none">
 							<p>Loading More Products. . .</p>
@@ -118,6 +124,11 @@
 		    </div>
 		</div>
 	</div>
-</div>
 <!-- <input type="hidden" name="ajaxload" value="0" /> -->
 @endsection
+
+<style>
+	.w-5{
+		display: none;
+	}	
+</style>

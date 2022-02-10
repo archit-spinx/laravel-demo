@@ -20,9 +20,9 @@ class ProductController extends BaseController
      */
     public function index()
     {
-        $products = Product::paginate();
-    
-        return $this->sendResponse(ProductResource::collection($products), 'Products retrieved successfully.');
+        $products = Product::all();
+        return $products;
+        //return $this->sendResponse(ProductResource::collection($products), 'Products retrieved successfully.');
     }
     
     /**
@@ -139,34 +139,35 @@ class ProductController extends BaseController
 
     public function filterPrice(Request $request) {
 
-        $price = $request->price;
-        $name = $request->search;
-        $category = $request->category;
+        $category =  $_GET['category'];
+        $name =  $_GET['search'];
+        $price =  $_GET['price'];
+        $page =  $_GET['page'];
 
         if ($category && $name && $price) {
-            $productCollection = Product::query()->where('category_id','=',$category)->where('title', 'LIKE', "%$name%")->orderBy('price', $price)->paginate(6);
-            return view('products-data',["productCollection" => $productCollection]);
-        } elseif ($category && $name && is_null($price)) {
-            $productCollection = Product::query()->where('category_id','=',$category)->where('title', 'LIKE', "%$name%")->paginate(6);
-            return view('products-data',["productCollection" => $productCollection]);
-        } elseif ($name && $price && is_null($category)) {
-            $productCollection = Product::query()->where('title', 'LIKE', "%$name%")->orderBy('price', $price)->paginate(6);
-            return view('products-data',["productCollection" => $productCollection]);
-        } elseif ($category && $price && is_null($name)) {
-            $productCollection = Product::query()->where('category_id','=',$category)->orderBy('price', $price)->paginate(6);
-            return view('products-data',["productCollection" => $productCollection]);
-        } elseif ($category && is_null($price) && is_null($name)) {
-            $productCollection = Product::query()->where('category_id','=',$category)->paginate(6);
-            return view('products-data',["productCollection" => $productCollection]);
-        } elseif ($name && is_null($price) && is_null($category)) {
-            $productCollection = Product::query()->where('title', 'LIKE', "%$name%")->paginate(6);
-            return view('products-data',["productCollection" => $productCollection]);
-        } elseif ($price && is_null($name) && is_null($category)) {
-            $productCollection = Product::query()->orderBy('price', $price)->paginate(6);
-            return view('products-data',["productCollection" => $productCollection]);
+            $productCollection = Product::query()->where('category_id','=',$category)->where('title', 'LIKE', "%$name%")->orderBy('price', $price)->get();
+            return $productCollection;
+        } elseif ($category && $name) {
+            $productCollection = Product::query()->where('category_id','=',$category)->where('title', 'LIKE', "%$name%")->get();
+            return $productCollection;
+        } elseif ($name && $price) {
+            $productCollection = Product::query()->where('title', 'LIKE', "%$name%")->orderBy('price', $price)->get();
+            return $productCollection;
+        } elseif ($category && $price) {
+            $productCollection = Product::query()->where('category_id','=',$category)->orderBy('price', $price)->get();
+            return $productCollection;
+        } elseif ($category) {
+            $productCollection = Product::query()->where('category_id','=',$category)->get();
+            return $productCollection;
+        } elseif ($name) {
+            $productCollection = Product::query()->where('title', 'LIKE', "%$name%")->get();
+            return $productCollection;
+        } elseif ($price) {
+            $productCollection = Product::query()->orderBy('price', $price)->get();
+            return $productCollection;
         } else {
             $productCollection = Product::all();
-            return view('products-data',["productCollection" => $productCollection]);
+            return $productCollection;
         }
     }
 }

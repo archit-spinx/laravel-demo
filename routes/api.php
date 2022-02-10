@@ -21,9 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/products', function () {
-    return ProductResource::collection(Product::where('status', 1)->orderBy('updated_at', 'desc')->paginate(6));
-});
+// Route::get('/products', function () {
+//     return ProductResource::collection(Product::where('status', 1)->orderBy('updated_at', 'desc')->paginate(6));
+// });
 Route::get('/all-products', function () {
     return ProductResource::collection(Product::where('status', 1)->get());
 });
@@ -35,3 +35,4 @@ Route::post('product/update/{id}', 'App\Http\Controllers\API\ProductController@u
 Route::delete('product/delete/{id}', 'App\Http\Controllers\API\ProductController@destroy');
 
 Route::get('/filter', [ProductController::class, 'filterPrice']);
+Route::get('/products', [ProductController::class, 'index']);
