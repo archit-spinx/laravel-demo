@@ -79,6 +79,7 @@ class AdminController extends Controller
     function deletePages($id){
         $data = Pages::find($id);
         $data->delete();
+
        return redirect(route('pages'))->with('message', 'Page deleted successfully.');
     }
 
@@ -122,13 +123,14 @@ class AdminController extends Controller
      function deleteUser($id){
         $data = user::find($id);
         $data->delete();
+
        return redirect(route('users'))->with('message', 'User deleted successfully.');
     }
 
       public function updateUser(Request $req){
         $req->validate([
             'name' => ['required', 'string', 'max:255'],
-           // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'max:10'],
             'role' => ['required'],
 
@@ -137,7 +139,7 @@ class AdminController extends Controller
 
         $user = User::find($req->id);
         $user->name = $req->name;
-       // $user->email = $req->email;
+        $user->email = $req->email;
         $user->phone = $req->phone;
         $user->role = $req->role;
         $user->update();
