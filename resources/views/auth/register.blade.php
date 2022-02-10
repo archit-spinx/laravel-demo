@@ -43,7 +43,7 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-end">{{ __('Phone') }}</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
+                                <input id="phone" type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}"  autocomplete="phone" autofocus>
 
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
@@ -80,7 +80,7 @@
                             <label for="profile_img" class="col-md-4 col-form-label text-md-end">{{ __('Profile Image') }}</label>
 
                             <div class="col-md-6">
-                                <input id="profile_img" type="file" class="form-control" name="profile_img" autocomplete="profile">
+                                <input id="profile_img" type="file" class="form-control" name="profile_img"  autocomplete="profile">
                             </div>
                         </div>
                         <div class="row mb-0">
