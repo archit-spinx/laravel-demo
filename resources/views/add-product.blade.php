@@ -45,10 +45,12 @@
 
 								<option value=""></option>
 								@foreach($categoryCollection as $category)
-									<?php
+									<?php									
 										$selected = '';
 										if (isset($product) && $category->id == $product->category_id) {
 											$selected = 'selected';
+										}elseif($category->id == old('category_id')){
+											$selected = 'selected';	
 										}
 									?>
 									<option value="{{ __($category->id) }}" <?= $selected ?> >{{ __($category->category_name) }}</option>
