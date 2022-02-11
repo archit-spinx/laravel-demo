@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Client\Response;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -161,9 +162,15 @@ class ProductController extends Controller
         }
         $product->save(); 
         */       
-        
+        $role = Auth::user()->role;
+                
         if($response->successful()){
-        return redirect(route('products'))->with('message', 'New Product Added Successfully');
+            if($role == 0) { 
+                return redirect(route('adminproducts.getProducts') )->with('message', 'New Product Added Successfully');                
+            }else{
+                return redirect(route('products'))->with('message', 'New Product Added Successfully');
+            }
+            
         }else{         
          return redirect(route('add-product'))->with('message', 'Error on create Product');
         }
@@ -250,9 +257,14 @@ class ProductController extends Controller
             'special_price' => $request->get('special_price'),
             'image' => $request->get('image'),
         ]);
-
+        
+        $role = Auth::user()->role;
         if($response->successful()){
-            return redirect()->route('products')->with('message', 'Product Updated Successfully');
+            if($role == 0) { 
+                return redirect(route('adminproducts.getProducts') )->with('message', 'Product Updated Successfully');                
+            }else{
+                return redirect(route('products'))->with('message', 'Product Updated Successfully');
+            }           
         }else{         
             return redirect(route('add-product'))->with('message', 'Error On Updated Product');
         }
