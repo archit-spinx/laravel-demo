@@ -322,4 +322,7 @@ class ProductController extends Controller
       $rating = $avgStar->avg('rating');
       return view('view-product', compact('product','rating','rated')); 
     }
+
+
+    
 }
