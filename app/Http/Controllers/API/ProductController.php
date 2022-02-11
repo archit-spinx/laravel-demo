@@ -20,7 +20,7 @@ class ProductController extends BaseController
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::query()->orderBy('id', 'desc')->get();
         return $products;
         //return $this->sendResponse(ProductResource::collection($products), 'Products retrieved successfully.');
     }
@@ -166,7 +166,7 @@ class ProductController extends BaseController
             $productCollection = Product::query()->orderBy('price', $price)->get();
             return $productCollection;
         } else {
-            $productCollection = Product::all();
+            $productCollection = Product::query()->orderBy('id', 'desc')->get();
             return $productCollection;
         }
     }

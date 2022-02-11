@@ -76,7 +76,7 @@
 				        </div>
 				        @endforeach
 						
-						<div id="pagination-products" class="pagination-section">
+						<div id="pagination" class="pagination-section">
 							<input type="hidden" id="totalcount" name="totalcount" value="{{$productCollection->total()}}">
 							<span class="pull-right">{{$productCollection->links()}}</span>
 						</div>

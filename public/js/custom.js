@@ -103,6 +103,17 @@ function encodeImageFileAsURL(element){
 }
 
 $(document).ready(function () {
+     
+    //Ajax pagination when page get load for products.
+     $("#pagination a").on("click",function(e){
+        e.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        $('#hidden_page').val(page);
+        $('li').removeClass('active');
+        $(this).parent().addClass('active');
+        filterForm();
+    });
+
     $('#search').on('keyup',function(){
         $value = $(this).val();
         $.ajax(
