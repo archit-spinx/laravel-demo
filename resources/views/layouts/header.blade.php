@@ -115,7 +115,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                     <a class="dropdown-item" href="{{ url('/admin/profile') }}">
+                                     <a class="dropdown-item" href="@if($role == 0){{ url('/admin/profile') }}@else{{ url('/profile') }}@endif">
                                         {{ __('Profile') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"

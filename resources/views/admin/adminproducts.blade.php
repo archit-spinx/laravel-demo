@@ -14,7 +14,7 @@
 		    		<div class="">
 
 					<div class="table_pages">
-						<table>
+						<table class="table table-striped">
 						<tr>
 							<th style="width:5%"> ID</th>
 							<th style="width:15%">Title</th>

@@ -138,8 +138,8 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome &nbsp;
-                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ auth()->user()->name }}</span>
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;
+                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Welcome {{ auth()->user()->name }}</span>
                                     @if(Auth::user()->profile_img)
 <img class="img-profile rounded-circle" src="{{asset('/'.Auth::user()->profile_img)}}" alt="profile_image" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
 @endif

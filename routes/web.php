@@ -56,12 +56,17 @@ Route::post('/admin/users/add', [App\Http\Controllers\AdminController::class, 's
 Route::get('/admin/users/delete/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->middleware(['admin','auth']);
 
 
-Route::get('/admin/profile',[App\Http\Controllers\UserController::class, 'show'])->name('profile')->middleware(['admin','auth']);;
-Route::post('/admin/profile',[App\Http\Controllers\UserController::class, 'profileUpdate'])->name('profile')->middleware(['admin','auth']);;
+
 Route::get('/admin/products', [App\Http\Controllers\AdminProductController::class, 'getProducts'])->middleware(['admin','auth']);
 
 Route::get('/admin/profile',[App\Http\Controllers\UserController::class, 'show'])->name('profile')->middleware(['admin','auth']);
 Route::post('/admin/profile',[App\Http\Controllers\UserController::class, 'profileUpdate'])->name('profile')->middleware(['admin','auth']);
+
+Route::get('/profile',[App\Http\Controllers\UserController::class, 'show'])->name('profile')->middleware(['auth']);;
+Route::post('/profile',[App\Http\Controllers\UserController::class, 'profileUpdate'])->name('profile')->middleware(['auth']);;
+
+
+
 Route::get('/admin/products', [App\Http\Controllers\AdminProductController::class, 'getProducts'])->middleware(['admin','auth'])->name('adminproducts.getProducts');
 
 

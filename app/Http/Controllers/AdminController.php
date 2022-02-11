@@ -103,7 +103,7 @@ class AdminController extends Controller
             //'page_title' => 'required|max:255|unique:pages,title,'.$req->id,
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,'.$req->id,
-            'phone' => 'required|string|max:10',
+           //'phone' => 'required|string|max:10',
             'password' => 'required|string|min:8',
             'role' => 'required',
 
@@ -130,8 +130,8 @@ class AdminController extends Controller
       public function updateUser(Request $req){
         $req->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'max:10'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$req->id],
+           // 'phone' => ['required', 'max:10'],
             'role' => ['required'],
 
         ],

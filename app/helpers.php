@@ -15,3 +15,7 @@ function getRole($role){
         return "Subscriber";
     }
 }
+
+function trim_content($content){
+ return mb_strimwidth($content,0, 80, '...');
+}
