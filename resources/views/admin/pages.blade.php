@@ -14,7 +14,7 @@
 
 </div>
 <div class="table_pages">
-<table>
+<table class="table table-striped">
 <tr>
 	<th style="width:5%">Page ID</th>
 	<th style="width:15%">Title</th>
@@ -29,10 +29,10 @@
 		<td>{{$singlepages->id}}</td>
 		<td>{{$singlepages->title}}</td>
 		<td>{{$singlepages->slug}}</td>
-		<td>{{$singlepages->content}}</td>
+		<td>{{ trim_content($singlepages->content)}}</td>
 		<td>{{ getUsername($singlepages->user_by) }}</td>
 		<td><a class="btn btn-primary mx-1" href="{{ url('/') }}/{{$singlepages->slug}}">View</a>
-			<a class="btn btn-primary mx-1" href="{{ url('/admin/pages/edit/') }}/{{$singlepages->id}}">Edit</a><a class="btn btn-primary" onclick="return confirm('Are you sure?')" href="{{ url('/admin/pages/delete/') }}/{{$singlepages->id}}">Delete</a></td>
+			<a class="btn btn-primary mx-1" href="{{ url('/admin/pages/edit/') }}/{{$singlepages->id}}">Edit</a><a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{ url('/admin/pages/delete/') }}/{{$singlepages->id}}">Delete</a></td>
 
 
 	</tr>
