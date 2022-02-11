@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-	<div class="row">
+	<div class="row loaderm">
 		<div class="col-md-2">
 			<form name="filter">
 				@csrf

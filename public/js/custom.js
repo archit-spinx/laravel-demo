@@ -38,18 +38,23 @@ function loadMoreData(page){
 }
 
 function filterForm(){
+    if($('#preloader').length === 0){
+        jQuery(".loaderm").prepend('<div id="preloader"></div>');
+    }
     $.ajax(
     {
         url: '/search-products',
         type: "post",
         data: $("form[name='filter']").serialize(),
         beforeSend: function()
-        {
+        {   
+            
             $('.ajax-load').show();
         }
     })
     .done(function(data)
     {
+        jQuery("#preloader").remove();    
         if(data == ""){
             $('.ajax-load').html("No Products found");
             return;

@@ -26,8 +26,21 @@
 
     <script src="{{ asset('js/custom.js') }}"></script>
     <script src="{{ asset('js/jRate.min.js') }}" defer></script>
+    <style>
+    #preloader{
+        background:hsla(0,0%,97%,.8) url(/loader-new.gif) no-repeat 50%;
+        width:100%;
+        height:100%;
+        display:inline-block;
+        background-size:40px;
+        position:fixed;
+        z-index:2;
+        top:0;
+        left:0
+        }</style>
 </head>
 <body>
+    
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
