@@ -52,7 +52,7 @@
 							</td>
 							<td ><p> {{ __($product['description']) }}</p></td>
 								
-							<td ><a class="btn btn-primary" href="/product/{{$product['id']}}">View</a></td>
+							<td ><a class="btn btn-primary" href="{{route('singleProduct',$product['id'])}}">View</a></td>
 							<td ><a class="btn btn-primary" href="{{route('edit-product',$product['id'])}}">Edit</a></td>
 							<td ><a class="btn btn-danger" onclick="return confirm('Are you sure, do you want delete this product?')" href="{{route('products').'/remove/'.$product['id']}}">Delete</a></td>
 								
