@@ -71,3 +71,5 @@ Route::get('/admin/products', [App\Http\Controllers\AdminProductController::clas
 
 
 Route::get('/{slug}',[App\Http\Controllers\HomeController::class, 'show']); 
+
+Route::post('/search-products',[App\Http\Controllers\ProductController::class, 'searchProducts'])->name('search-products');

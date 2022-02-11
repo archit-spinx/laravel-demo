@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Client\Response;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductController extends Controller
 {
@@ -31,15 +33,27 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
-    function External() {
+    // function External() {
 		
-		if(isset($_GET['page'])){
-            $page = '?page='.$_GET['page'];
-        }else{
-            $page = '';
-        }
-        $data = Http::get(env("API_URL").'/api/products'.$page); 
-        return $data;
+	// 	if(isset($_GET['page'])){
+    //         $page = '?page='.$_GET['page'];
+    //     }else{
+    //         $page = '';
+    //     }
+    //     $data = Http::get(env("API_URL").'/api/products'.$page); 
+    //     return $data;
+    // }
+
+    public function searchProducts(Request $request)
+    {
+        $price = $request->price;
+        $name = $request->search;
+        $category = $request->category;
+        $page = $request->page;
+        $products = Http::get(env("API_URL").'/api/filter?search='.$name.'&price='.$price.'&category='.$category.'&page='.$page);
+        $p = $products->json();
+        $productCollection = $this->arrayPaginator($p);
+        return view('products-data',["productCollection" => $productCollection]);
     }
 
     public function getProducts(Request $request)
@@ -47,7 +61,9 @@ class ProductController extends Controller
         // $productCollection = Product::paginate(6);
         
         $categoryCollection = ProductCategory::all();
-        $products = $this->External()->json();
+        $data = Http::get(env("API_URL").'/api/products');
+        $product = $data->json();
+        $productCollection = $this->arrayPaginator($product);
 
         // if ($request->ajax()) {
         //     if(!!$request->search){
@@ -76,7 +92,15 @@ class ProductController extends Controller
 
         //     return response()->json(['html'=>$view]);
         // }
-        return view('products',["productCollection" => $products])->with("categoryCollection",$categoryCollection);
+        return view('products',["productCollection" => $productCollection])->with("categoryCollection",$categoryCollection);
+    }
+
+    public function arrayPaginator($data){
+        $page = request()->get('page', 1);
+        $perPage =  request()->get('perPage', 6);
+        $offset = ($page * $perPage) - $perPage;
+        return new LengthAwarePaginator(array_slice($data, $offset, $perPage, true), count($data), $perPage, $page,
+        ['path' => Paginator::resolveCurrentPath()]);
     }
 
     public function getProductsCounter(Request $request)

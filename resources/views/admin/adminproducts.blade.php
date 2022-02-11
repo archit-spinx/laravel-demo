@@ -10,7 +10,7 @@
 					    {{ session()->get('message') }}
 					</div>
 				@endif
-		    	@if(count($products['data']) > 0)
+		    	@if(count($productCollection) > 0)
 		    		<div class="">
 
 					<div class="table_pages">
@@ -27,7 +27,7 @@
 							<th style="width:5%">Delete</th>
 
 						</tr>
-				    	@foreach($products['data'] as $product)
+				    	@foreach($productCollection as $product)
 				        <tr>
 							<td >								
 								<label>{{ __($product['id']) }}</label>
@@ -60,8 +60,12 @@
 				        @endforeach
 						</table>
 						
+						<div id="pagination-products" class="pagination-section">
+							<input type="hidden" id="totalcount" name="totalcount" value="{{$productCollection->total()}}">
+							<span class="pull-right">{{$productCollection->links()}}</span>
+						</div>
 
-						@if(count($products['meta']) > 0)						
+						{{-- @if(count($products['meta']) > 0)						
 						<div class="d-flex justify-content-center">
 							<ul class="list-inline">
 							@foreach($products['meta']['links'] as $productpag)
@@ -79,7 +83,7 @@
 							@endforeach
 							</ul>	
 						</div>
-						@endif					
+						@endif --}}					
 						
 						</div>
 					</div>
@@ -108,5 +112,8 @@
 	.table_pages table {
   empty-cells: show;
 }
+.w-5{
+		display: none;
+	}	
 </style>
 @endsection
